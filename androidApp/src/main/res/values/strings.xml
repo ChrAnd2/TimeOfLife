@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TimeOfLife</string>
+
+    <string name="onboarding_title">Welcome to TimeOfLife</string>
+    <string name="onboarding_subtitle">Tell us a little about yourself to get started.</string>
+    <string name="onboarding_name_label">Name</string>
+    <string name="onboarding_sex_label">Sex</string>
+    <string name="onboarding_birth_date_label">Birth date</string>
+    <string name="onboarding_birth_date_placeholder">Select your birth date</string>
+    <string name="onboarding_submit">Get started</string>
+    <string name="onboarding_save_error">Couldn\'t save your info. Please try again.</string>
+
+    <string name="sex_male">Male</string>
+    <string name="sex_female">Female</string>
+    <string name="sex_diverse">Diverse</string>
+
+    <string name="home_greeting">Hello, %1$s!</string>
+    <plurals name="home_age">
+        <item quantity="one">You are %1$d year old.</item>
+        <item quantity="other">You are %1$d years old.</item>
+    </plurals>
 </resources>
