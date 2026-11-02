@@ -1,6 +1,6 @@
 package de.chrisander.timeoflife.ui.onboarding
 
-import de.chrisander.timeoflife.domain.model.Sex
+import de.chrisander.timeoflife.domain.model.profile.Sex
 import kotlinx.datetime.LocalDate
 
 sealed interface OnboardingEvent {

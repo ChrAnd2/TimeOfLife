@@ -4,8 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import de.chrisander.timeoflife.domain.model.Sex
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.domain.model.profile.Sex
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate

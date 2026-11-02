@@ -1,8 +1,8 @@
 package de.chrisander.timeoflife.data.datasource
 
 import de.chrisander.timeoflife.data.datastore.createDataStore
-import de.chrisander.timeoflife.domain.model.Sex
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.domain.model.profile.Sex
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate

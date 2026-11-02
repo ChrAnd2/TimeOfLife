@@ -1,8 +1,8 @@
 package de.chrisander.timeoflife.ui.onboarding
 
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
-import de.chrisander.timeoflife.domain.model.Sex
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.domain.model.profile.Sex
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import de.chrisander.timeoflife.ui.navigation.HomeRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
 import de.chrisander.timeoflife.ui.navigation.OnboardingRoute

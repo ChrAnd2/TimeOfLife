@@ -1,8 +1,8 @@
 package de.chrisander.timeoflife.data.repository
 
 import de.chrisander.timeoflife.data.datasource.UserProfileDataSource
-import de.chrisander.timeoflife.domain.model.Sex
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.domain.model.profile.Sex
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
