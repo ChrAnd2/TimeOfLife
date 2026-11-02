@@ -43,9 +43,11 @@ Layers: `data` → `domain`, wired by Koin in `di/SharedModules.kt`
 `platformModule` is `expect`/`actual` per platform and provides the `DataStore<Preferences>`
 (`data/datastore/DataStoreFactory.*`).
 
-- `data/datasource/UserProfileLocalDataSource` persists `UserProfile` in Preferences DataStore.
-  Right now it only stores name, sex and birth date. `lifespanSetting`, `lifespanFactors` and
-  `activities` fall back to their defaults when loaded.
+- `data/datasource/UserProfileLocalDataSource` persists `UserProfile` in Preferences DataStore. The
+  whole profile is one JSON value (kotlinx.serialization) under a single key, mapped through
+  `UserProfileDto` (DTOs in `data/datasource/dto/`, mappers in `data/datasource/mapper/`) so the
+  domain models carry no serialization annotations. A profile that can't be decoded is treated as
+  missing.
 - `domain/model/` holds pure data types grouped into `profile/`, `lifespan/` (plus
   `lifespan/factor/`), `activity/` and `lifetime/`.
 - `domain/usecase/` contains the computation pipeline:
