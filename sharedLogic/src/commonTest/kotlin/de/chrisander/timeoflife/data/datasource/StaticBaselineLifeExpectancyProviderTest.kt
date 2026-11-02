@@ -8,10 +8,12 @@ class StaticBaselineLifeExpectancyProviderTest {
 
     @Test
     fun diverseUsesMeanOfMaleAndFemaleBaseline() {
+        val male = StaticBaselineLifeExpectancyProvider.atBirth("de", Sex.MALE)
+        val female = StaticBaselineLifeExpectancyProvider.atBirth("de", Sex.FEMALE)
+
         assertEquals(
-            81.2,
-            StaticBaselineLifeExpectancyProvider.atBirth("de", Sex.DIVERSE),
-            absoluteTolerance = 1e-9
+            (male + female) / 2,
+            StaticBaselineLifeExpectancyProvider.atBirth("de", Sex.DIVERSE)
         )
     }
 

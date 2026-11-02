@@ -79,10 +79,9 @@ class StudyBasedLifespanEstimatorTest {
             ),
             estimate.adjustments,
         )
-        assertEquals(
-            listOf(-10.0, -1.5, 3.4, -3.0, -6.0),
-            estimate.adjustments.map { it.yearsEffect })
-        assertEquals(80.0 - 10 - 1.5 + 3.4 - 3 - 6, estimate.years, absoluteTolerance = 1e-9)
+        val effects = listOf(-10.0, -1.5, 3.4, -3.0, -6.0)
+        assertEquals(effects, estimate.adjustments.map { it.yearsEffect })
+        assertEquals(80.0 + effects.sum(), estimate.years)
     }
 
     @Test
