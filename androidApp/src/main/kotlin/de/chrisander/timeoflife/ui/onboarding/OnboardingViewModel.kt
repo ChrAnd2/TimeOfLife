@@ -3,7 +3,7 @@ package de.chrisander.timeoflife.ui.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import de.chrisander.timeoflife.ui.navigation.HomeRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -4,36 +4,38 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import de.chrisander.timeoflife.domain.model.Sex
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.data.datasource.dto.UserProfileDto
+import de.chrisander.timeoflife.data.datasource.mapper.toDomain
+import de.chrisander.timeoflife.data.datasource.mapper.toDto
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.LocalDate
+import kotlinx.serialization.json.Json
 
 class UserProfileLocalDataSource(
     private val dataStore: DataStore<Preferences>,
 ) : UserProfileDataSource {
 
+    private val json = Json {
+        ignoreUnknownKeys = true
+        // ActivityDto.Default has a property named "type", the default discriminator.
+        classDiscriminator = "kind"
+    }
+
+    /** A stored profile that can't be decoded or fails the domain model's validation is treated as missing. */
     override val userProfile: Flow<UserProfile?> = dataStore.data.map { preferences ->
-        val name = preferences[Keys.NAME] ?: return@map null
-        val sex = preferences[Keys.SEX]?.let { stored -> Sex.entries.find { it.name == stored } }
-            ?: return@map null
-        val birthDate = preferences[Keys.BIRTH_DATE]?.let(LocalDate::parse) ?: return@map null
-        UserProfile(name = name, sex = sex, birthDate = birthDate)
+        preferences[USER_PROFILE]?.let { stored ->
+            runCatching { json.decodeFromString<UserProfileDto>(stored).toDomain() }.getOrNull()
+        }
     }
 
     override suspend fun saveUserProfile(profile: UserProfile) {
         dataStore.edit { preferences ->
-            preferences[Keys.NAME] = profile.name
-            preferences[Keys.SEX] = profile.sex.name
-            // ISO-8601 (yyyy-MM-dd)
-            preferences[Keys.BIRTH_DATE] = profile.birthDate.toString()
+            preferences[USER_PROFILE] = json.encodeToString(profile.toDto())
         }
     }
 
-    private object Keys {
-        val NAME = stringPreferencesKey("user_name")
-        val SEX = stringPreferencesKey("user_sex")
-        val BIRTH_DATE = stringPreferencesKey("user_birth_date")
+    private companion object {
+        val USER_PROFILE = stringPreferencesKey("user_profile")
     }
 }

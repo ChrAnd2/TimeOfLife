@@ -45,7 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.chrisander.timeoflife.R
-import de.chrisander.timeoflife.domain.model.Sex
+import de.chrisander.timeoflife.domain.model.profile.Sex
 import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
 import de.chrisander.timeoflife.util.toLocalDateFromUtcMillis
 import de.chrisander.timeoflife.util.toUtcEpochMillis

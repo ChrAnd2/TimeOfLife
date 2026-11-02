@@ -1,6 +1,6 @@
 package de.chrisander.timeoflife.data.repository
 
-import de.chrisander.timeoflife.domain.model.UserProfile
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import kotlinx.coroutines.flow.Flow
 
 interface UserProfileRepository {
