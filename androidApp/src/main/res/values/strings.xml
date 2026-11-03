@@ -23,13 +23,16 @@
     <string name="clock_widget_name">Life clock</string>
     <string name="clock_widget_description">Your life as a 24-hour clock, split by how you spent it.</string>
     <string name="clock_widget_content_description">Life clock at %1$s</string>
+    <string name="bar_widget_name">Life bar</string>
+    <string name="bar_widget_description">Your life as a bar, split by how you spent it.</string>
+    <string name="bar_widget_content_description">Life bar, %1$d %% lived</string>
     <string name="widget_set_up">Set up</string>
 
     <string name="widget_settings_title">Widget settings</string>
     <string name="widget_settings_legend_label">Legend</string>
     <string name="widget_settings_legend_automatic">Automatic (depends on widget size)</string>
-    <string name="widget_settings_legend_side">Beside the clock</string>
-    <string name="widget_settings_legend_bottom">Below the clock</string>
+    <string name="widget_settings_legend_side">Beside</string>
+    <string name="widget_settings_legend_bottom">Below</string>
     <string name="widget_settings_legend_hidden">Hidden</string>
     <string name="widget_settings_save">Save</string>
 

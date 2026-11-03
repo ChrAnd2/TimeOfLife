@@ -3,7 +3,7 @@ package de.chrisander.timeoflife
 import android.app.Application
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
 import de.chrisander.timeoflife.di.appModules
-import de.chrisander.timeoflife.widget.LifeWidgets
+import de.chrisander.timeoflife.widget.Widgets
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -33,7 +33,7 @@ class TimeOfLifeApplication : Application() {
                 .distinctUntilChanged()
                 // The first value is what the widgets already show.
                 .drop(1)
-                .collect { LifeWidgets.requestUpdate(this@TimeOfLifeApplication) }
+                .collect { Widgets.requestUpdate(this@TimeOfLifeApplication) }
         }
     }
 }

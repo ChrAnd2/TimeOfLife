@@ -1,15 +1,15 @@
-package de.chrisander.timeoflife.widget.clock
+package de.chrisander.timeoflife.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.RemoteViews
 import de.chrisander.timeoflife.MainActivity
 import de.chrisander.timeoflife.R
-import de.chrisander.timeoflife.widget.GetLifeProgressUseCase
 import de.chrisander.timeoflife.widget.data.repository.WidgetSettingsRepository
 import de.chrisander.timeoflife.widget.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.legend.LegendEntry
@@ -23,10 +23,22 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.roundToInt
 
-class LifeClockWidgetProvider : AppWidgetProvider(), KoinComponent {
+abstract class WidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val getLifeProgressUseCase: GetLifeProgressUseCase by inject()
     private val settings: WidgetSettingsRepository by inject()
+
+    /** @param progress `null` before onboarding. */
+    protected abstract fun render(
+        progress: LifeProgress?,
+        legend: List<LegendEntry>,
+        legendPosition: LegendPosition,
+        widthPx: Int,
+        heightPx: Int,
+        density: Float,
+    ): Bitmap
+
+    protected abstract fun contentDescription(context: Context, progress: LifeProgress): String
 
     override fun onUpdate(
         context: Context,
@@ -70,10 +82,11 @@ class LifeClockWidgetProvider : AppWidgetProvider(), KoinComponent {
                 appWidgetIds.forEach { id ->
                     val views = remoteViews(
                         context = context,
+                        appWidgetManager = appWidgetManager,
+                        appWidgetId = id,
                         progress = progress,
                         legend = legend,
                         legendPosition = settings.legendPosition(id),
-                        options = appWidgetManager.getAppWidgetOptions(id),
                     )
                     appWidgetManager.updateAppWidget(id, views)
                 }
@@ -85,41 +98,36 @@ class LifeClockWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private fun remoteViews(
         context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
         progress: LifeProgress?,
         legend: List<LegendEntry>,
         legendPosition: LegendPosition,
-        options: Bundle,
     ): RemoteViews {
         val density = context.resources.displayMetrics.density
+        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val info = appWidgetManager.getAppWidgetInfo(appWidgetId)
         // Portrait size: the launcher reports min width and max height for it.
-        val widthDp = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH).takeIf { it > 0 }
-            ?: DEFAULT_WIDTH_DP
-        val heightDp =
-            options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).takeIf { it > 0 }
-                ?: DEFAULT_HEIGHT_DP
-        val bitmap = renderLifeClockWidget(
-            progress = progress,
-            legend = legend,
-            legendPosition = legendPosition,
-            widthPx = (widthDp * density).roundToInt(),
-            heightPx = (heightDp * density).roundToInt(),
-            density = density,
-        )
-        return RemoteViews(context.packageName, R.layout.clock_widget).apply {
-            setImageViewBitmap(R.id.life_clock_image, bitmap)
+        // Without it, fall back to the minimum size from the widget info, which is already in px.
+        val widthPx = options.sizePx(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, density)
+            ?: info?.minWidth ?: FALLBACK_SIZE_PX
+        val heightPx = options.sizePx(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, density)
+            ?: info?.minHeight ?: FALLBACK_SIZE_PX
+
+        val bitmap = render(progress, legend, legendPosition, widthPx, heightPx, density)
+        return RemoteViews(context.packageName, R.layout.widget).apply {
+            setImageViewBitmap(R.id.life_widget_image, bitmap)
             setContentDescription(
-                R.id.life_clock_image,
-                progress?.let {
-                    context.getString(
-                        R.string.clock_widget_content_description,
-                        it.clockText
-                    )
-                }
+                R.id.life_widget_image,
+                progress?.let { contentDescription(context, it) }
                     ?: context.getString(R.string.widget_set_up),
             )
-            setOnClickPendingIntent(R.id.life_clock_image, openAppIntent(context))
+            setOnClickPendingIntent(R.id.life_widget_image, openAppIntent(context))
         }
     }
+
+    private fun Bundle.sizePx(key: String, density: Float): Int? =
+        getInt(key).takeIf { it > 0 }?.let { (it * density).roundToInt() }
 
     private fun openAppIntent(context: Context): PendingIntent = PendingIntent.getActivity(
         context,
@@ -129,7 +137,6 @@ class LifeClockWidgetProvider : AppWidgetProvider(), KoinComponent {
     )
 
     private companion object {
-        const val DEFAULT_WIDTH_DP = 250
-        const val DEFAULT_HEIGHT_DP = 110
+        const val FALLBACK_SIZE_PX = 300
     }
 }

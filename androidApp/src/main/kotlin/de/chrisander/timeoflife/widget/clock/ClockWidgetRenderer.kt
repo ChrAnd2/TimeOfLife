@@ -5,14 +5,15 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import androidx.core.graphics.createBitmap
+import de.chrisander.timeoflife.widget.MIN_LEGEND_ROW_DP
 import de.chrisander.timeoflife.widget.WidgetColors
 import de.chrisander.timeoflife.widget.domain.model.LifeProgress
+import de.chrisander.timeoflife.widget.drawPanel
 import de.chrisander.timeoflife.widget.legend.LegendEntry
 import de.chrisander.timeoflife.widget.legend.LegendPosition
 import de.chrisander.timeoflife.widget.legend.drawLegend
+import de.chrisander.timeoflife.widget.renderWidgetBitmap
 import kotlin.math.cos
-import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
@@ -22,20 +23,14 @@ import kotlin.math.sin
  * @param progress `null` draws an empty face without hands, e.g. before onboarding.
  * @param density display density, so the legend stays legible at any widget size.
  */
-internal fun renderLifeClockWidget(
+internal fun renderClockWidget(
     progress: LifeProgress?,
     legend: List<LegendEntry>,
     legendPosition: LegendPosition,
     widthPx: Int,
     heightPx: Int,
     density: Float,
-): Bitmap {
-    // RemoteViews bitmaps count against a binder memory limit, so large widgets are drawn smaller and scaled up.
-    val scale = min(1f, MAX_SIZE_PX.toFloat() / max(widthPx, heightPx))
-    val width = (widthPx * scale).toInt().coerceAtLeast(MIN_SIZE_PX)
-    val height = (heightPx * scale).toInt().coerceAtLeast(MIN_SIZE_PX)
-    val bitmap = createBitmap(width, height)
-    val canvas = Canvas(bitmap)
+): Bitmap = renderWidgetBitmap(widthPx, heightPx) { width, height, scale ->
     val minRowHeight = MIN_LEGEND_ROW_DP * density * scale
     val padding = min(width, height) * 0.06f
 
@@ -44,14 +39,14 @@ internal fun renderLifeClockWidget(
     when (position) {
         LegendPosition.SIDE -> {
             val clockSize = min(height.toFloat(), width * MAX_CLOCK_SHARE_WITH_LEGEND)
-            canvas.drawPanel(width, height)
-            canvas.drawLifeClock(
+            drawPanel(width, height)
+            drawClock(
                 progress,
                 clockSize / 2,
                 height / 2f,
                 clockSize / 2 - padding
             )
-            canvas.drawLegend(
+            drawLegend(
                 legend,
                 RectF(clockSize, padding, width - padding * 1.5f, height - padding),
                 minRowHeight
@@ -60,30 +55,30 @@ internal fun renderLifeClockWidget(
 
         LegendPosition.BOTTOM -> {
             val clockSize = min(width.toFloat(), height * MAX_CLOCK_SHARE_WITH_LEGEND)
-            canvas.drawPanel(width, height)
-            canvas.drawLifeClock(
+            drawPanel(width, height)
+            drawClock(
                 progress,
                 width / 2f,
                 clockSize / 2,
                 clockSize / 2 - padding
             )
-            canvas.drawLegend(
+            drawLegend(
                 legend,
                 RectF(padding * 1.5f, clockSize, width - padding * 1.5f, height - padding),
                 minRowHeight
             )
         }
 
-        else -> canvas.drawLifeClock(
+        else -> drawClock(
             progress,
             width / 2f,
             height / 2f,
             min(width, height) / 2f * 0.97f
         )
     }
-    return bitmap
 }
 
+/** Beside a wide widget, below a tall one, hidden on a roughly square one. */
 private fun LegendPosition.resolve(width: Int, height: Int): LegendPosition = when {
     this != LegendPosition.AUTOMATIC -> this
     width >= height * LEGEND_ASPECT_RATIO -> LegendPosition.SIDE
@@ -91,7 +86,7 @@ private fun LegendPosition.resolve(width: Int, height: Int): LegendPosition = wh
     else -> LegendPosition.HIDDEN
 }
 
-private fun Canvas.drawLifeClock(
+private fun Canvas.drawClock(
     progress: LifeProgress?,
     cx: Float,
     cy: Float,
@@ -102,12 +97,6 @@ private fun Canvas.drawLifeClock(
     if (progress != null) drawPie(progress, cx, cy, r * 0.70f, paint)
     drawTicks(cx, cy, r, paint)
     if (progress != null) drawHand(progress.progress, cx, cy, r, paint)
-}
-
-private fun Canvas.drawPanel(width: Int, height: Int) {
-    val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = WidgetColors.FACE }
-    val corner = min(width, height) * 0.12f
-    drawRoundRect(RectF(0f, 0f, width.toFloat(), height.toFloat()), corner, corner, paint)
 }
 
 private fun Canvas.drawFace(cx: Float, cy: Float, r: Float, paint: Paint) {
@@ -184,10 +173,6 @@ private fun hourAngle(hour: Int): Float = fractionAngle(hour / 24.0)
 /** Angle in radians for a fraction of a full turn, starting at the top and going clockwise. */
 private fun fractionAngle(fraction: Double): Float =
     Math.toRadians(-90.0 + 360.0 * fraction).toFloat()
-
-private const val MIN_SIZE_PX = 64
-private const val MAX_SIZE_PX = 1024
-private const val MIN_LEGEND_ROW_DP = 16
 
 /** With [LegendPosition.AUTOMATIC]: how much wider than tall (or taller than wide) the widget must be for the legend. */
 private const val LEGEND_ASPECT_RATIO = 1.5f

@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
-import de.chrisander.timeoflife.widget.LifeWidgets
+import de.chrisander.timeoflife.widget.Widgets
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -37,7 +37,7 @@ class WidgetSettingsActivity : ComponentActivity() {
                 WidgetSettingsScreen(
                     viewModel = koinViewModel { parametersOf(appWidgetId) },
                     onSaved = {
-                        LifeWidgets.requestUpdate(this, appWidgetId)
+                        Widgets.requestUpdate(this, appWidgetId)
                         setResult(RESULT_OK, result)
                         finish()
                     },
