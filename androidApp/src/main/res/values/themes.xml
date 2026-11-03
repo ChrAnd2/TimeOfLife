@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shown before Compose draws its first frame, so it must match the Compose background. -->
+    <style name="Theme.TimeOfLife" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/brand_window_background</item>
+    </style>
+</resources>

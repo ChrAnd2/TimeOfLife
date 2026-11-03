@@ -83,6 +83,13 @@ study source for every number.** Keep it in sync when you change a factor or the
   this test fails. Inject `Clock` rather than calling `Clock.System` directly so ViewModels stay
   testable.
 
+### Brand
+
+The app name is always written `TimeOfLife`. `docs/brand/README.md` is the brand guide (logo,
+palette, font). Colors come from `ui/theme/BrandPalette.kt`, used by both the Compose theme and
+`WidgetColors`; don't hardcode new colors elsewhere. The launcher icons, logo mark, widget picker
+previews and iOS app icons hardcode the palette too, so update them when a brand color changes.
+
 ## Comments
 
 Only add comments to functions where really necessary and have documentation benefints. Never add

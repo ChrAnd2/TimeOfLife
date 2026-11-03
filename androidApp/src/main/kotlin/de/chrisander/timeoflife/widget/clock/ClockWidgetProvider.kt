@@ -2,6 +2,7 @@ package de.chrisander.timeoflife.widget.clock
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import de.chrisander.timeoflife.R
 import de.chrisander.timeoflife.widget.WidgetProvider
 import de.chrisander.timeoflife.widget.domain.model.LifeProgress
@@ -17,7 +18,10 @@ class ClockWidgetProvider : WidgetProvider() {
         widthPx: Int,
         heightPx: Int,
         density: Float,
-    ): Bitmap = renderClockWidget(progress, legend, legendPosition, widthPx, heightPx, density)
+        typeface: Typeface,
+    ): Bitmap = renderClockWidget(
+        progress, legend, legendPosition, widthPx, heightPx, density, typeface
+    )
 
     override fun contentDescription(context: Context, progress: LifeProgress): String =
         context.getString(R.string.clock_widget_content_description, progress.clockText)

@@ -13,7 +13,12 @@ import kotlin.math.min
  * Draws one row per entry (color dot, label, percent), vertically centered in [bounds].
  * Rows never get smaller than [minRowHeight]; entries that don't fit are left out from the end.
  */
-internal fun Canvas.drawLegend(entries: List<LegendEntry>, bounds: RectF, minRowHeight: Float) {
+internal fun Canvas.drawLegend(
+    entries: List<LegendEntry>,
+    bounds: RectF,
+    minRowHeight: Float,
+    typeface: Typeface,
+) {
     val visibleCount = min(entries.size, (bounds.height() / minRowHeight).toInt())
     if (visibleCount == 0) return
     val visible = entries.take(visibleCount)
@@ -21,8 +26,9 @@ internal fun Canvas.drawLegend(entries: List<LegendEntry>, bounds: RectF, minRow
         minOf(bounds.height() / visibleCount, bounds.height() / MIN_ROWS, bounds.width() * 0.16f)
 
     val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    val labelPaint = textPaint(rowHeight * 0.5f, WidgetColors.TEXT, Paint.Align.LEFT)
-    val percentPaint = textPaint(rowHeight * 0.5f, WidgetColors.TEXT_DIM, Paint.Align.RIGHT)
+    val labelPaint = textPaint(rowHeight * 0.5f, WidgetColors.TEXT, Paint.Align.LEFT, typeface)
+    val percentPaint =
+        textPaint(rowHeight * 0.5f, WidgetColors.TEXT_DIM, Paint.Align.RIGHT, typeface)
     val dotRadius = rowHeight * 0.2f
     val labelStart = bounds.left + dotRadius * 2 + rowHeight * 0.3f
     val percentWidth = percentPaint.measureText("100 %")
@@ -45,12 +51,12 @@ internal fun Canvas.drawLegend(entries: List<LegendEntry>, bounds: RectF, minRow
     }
 }
 
-private fun textPaint(textSize: Float, color: Int, align: Paint.Align) =
+private fun textPaint(textSize: Float, color: Int, align: Paint.Align, typeface: Typeface) =
     TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
         this.textSize = textSize
         this.color = color
+        this.typeface = typeface
         textAlign = align
-        typeface = Typeface.DEFAULT_BOLD
     }
 
 /** Keeps rows from getting oversized when there are only a few entries. */

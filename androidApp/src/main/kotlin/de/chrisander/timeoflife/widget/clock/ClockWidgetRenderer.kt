@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.graphics.Typeface
 import de.chrisander.timeoflife.widget.MIN_LEGEND_ROW_DP
 import de.chrisander.timeoflife.widget.WidgetColors
 import de.chrisander.timeoflife.widget.domain.model.LifeProgress
@@ -30,6 +31,7 @@ internal fun renderClockWidget(
     widthPx: Int,
     heightPx: Int,
     density: Float,
+    typeface: Typeface,
 ): Bitmap = renderWidgetBitmap(widthPx, heightPx) { width, height, scale ->
     val minRowHeight = MIN_LEGEND_ROW_DP * density * scale
     val padding = min(width, height) * 0.06f
@@ -49,7 +51,8 @@ internal fun renderClockWidget(
             drawLegend(
                 legend,
                 RectF(clockSize, padding, width - padding * 1.5f, height - padding),
-                minRowHeight
+                minRowHeight,
+                typeface,
             )
         }
 
@@ -65,7 +68,8 @@ internal fun renderClockWidget(
             drawLegend(
                 legend,
                 RectF(padding * 1.5f, clockSize, width - padding * 1.5f, height - padding),
-                minRowHeight
+                minRowHeight,
+                typeface,
             )
         }
 
