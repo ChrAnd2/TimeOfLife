@@ -5,13 +5,14 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import de.chrisander.timeoflife.widget.clock.LifeClockWidgetProvider
+import de.chrisander.timeoflife.widget.bar.BarWidgetProvider
+import de.chrisander.timeoflife.widget.clock.ClockWidgetProvider
 
-object LifeWidgets {
+object Widgets {
 
-    /** List of widget providers (e.g. clock and bar widget) so they refresh on profile changes. */
+    /** All widget providers, so they refresh on profile changes. */
     private val providers: List<Class<out AppWidgetProvider>> =
-        listOf(LifeClockWidgetProvider::class.java)
+        listOf(ClockWidgetProvider::class.java, BarWidgetProvider::class.java)
 
     fun requestUpdate(context: Context, appWidgetId: Int) {
         val provider =
