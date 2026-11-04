@@ -18,7 +18,7 @@ class StudyBasedLifespanEstimator(
         val baselineYears = baseline.atBirth(factors.countryCode, sex)
         val adjustments = factors.healthFactors.filter { it.yearsEffect != 0.0 }
         return Lifespan.Estimated(
-            // TODO: The baseline is life expectancy at birth. Use remaining life expectancy at currentAgeYears
+            // TODO(ToL-14): The baseline is life expectancy at birth. Use remaining life expectancy at currentAgeYears
             //  from a period life table instead.
             years = baselineYears + adjustments.sumOf { it.yearsEffect },
             baselineYears = baselineYears,

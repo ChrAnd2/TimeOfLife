@@ -30,6 +30,24 @@ jobs:
             exit 1
           fi
 
+      - name: Check open TODOs of this ticket
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          ticket=$(grep -oE 'ToL-[0-9]+' <<< "$BRANCH" | head -n 1 || true)
+          if [ -z "$ticket" ]; then
+            echo "::warning::Branch $BRANCH has no ToL-<number> ticket, skipping the TODO check."
+            exit 0
+          fi
+          if git grep -nF "TODO($ticket)" -- ':!changelog/' > todos.txt; then
+            while IFS=: read -r file line text; do
+              echo "::error file=$file,line=$line::Open TODO of $ticket, resolve it before merging."
+            done < todos.txt
+            exit 1
+          fi
+          echo "No open TODOs for $ticket."
+
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
