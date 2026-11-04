@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import android.graphics.Typeface
 import de.chrisander.timeoflife.widget.MIN_LEGEND_ROW_DP
 import de.chrisander.timeoflife.widget.WidgetColors
 import de.chrisander.timeoflife.widget.domain.model.LifeProgress
@@ -23,6 +24,7 @@ internal fun renderBarWidget(
     widthPx: Int,
     heightPx: Int,
     density: Float,
+    typeface: Typeface,
 ): Bitmap = renderWidgetBitmap(widthPx, heightPx) { width, height, scale ->
     val dp = density * scale
     val padding = PADDING_DP * dp
@@ -42,7 +44,8 @@ internal fun renderBarWidget(
             drawLegend(
                 legend,
                 RectF(barRight + padding, padding, width - padding, height - padding),
-                minRowHeight
+                minRowHeight,
+                typeface,
             )
         }
 
@@ -53,7 +56,8 @@ internal fun renderBarWidget(
             drawLegend(
                 legend,
                 RectF(padding, barBottom + padding / 2, width - padding, height - padding),
-                minRowHeight
+                minRowHeight,
+                typeface,
             )
         }
 

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <path d="M0,60 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0 Z" fill="#2A4A50" />
+  <path d="M3.6,60 a56.4,56.4 0 1,1 112.8,0 a56.4,56.4 0 1,1 -112.8,0 Z" fill="#11262A" />
+  <path d="M19.2,60 a40.8,40.8 0 1,1 81.6,0 a40.8,40.8 0 1,1 -81.6,0 Z" fill="#1F3B40" />
+  <path d="M60,60 L60,19.2 A40.8,40.8 0 0,1 100.08,52.35 Z" fill="#14B8A6" />
+  <path d="M60,60 L100.08,52.35 A40.8,40.8 0 0,1 87.93,89.74 Z" fill="#FF8A3D" />
+  <path d="M60,60 L87.93,89.74 A40.8,40.8 0 0,1 65.11,100.48 Z" fill="#FFCC33" />
+  <path d="M60,60 L65.11,100.48 A40.8,40.8 0 0,1 44.98,97.93 Z" fill="#C3B4FF" />
+  <path d="M60,60 L44.98,97.93 A40.8,40.8 0 0,1 32.07,89.74 Z" fill="#7AD94F" />
+  <path d="M60,12.6 L60,9.6" fill="none" stroke="#FFFFFF" stroke-width="3.3" stroke-linecap="round"
+      opacity="0.9" />
+  <path d="M93.52,26.48 L95.64,24.36" fill="none" stroke="#FFFFFF" stroke-width="3.3"
+      stroke-linecap="round" opacity="0.55" />
+  <path d="M107.4,60 L110.4,60" fill="none" stroke="#FFFFFF" stroke-width="3.3"
+      stroke-linecap="round" opacity="0.9" />
+  <path d="M93.52,93.52 L95.64,95.64" fill="none" stroke="#FFFFFF" stroke-width="3.3"
+      stroke-linecap="round" opacity="0.55" />
+  <path d="M60,107.4 L60,110.4" fill="none" stroke="#FFFFFF" stroke-width="3.3"
+      stroke-linecap="round" opacity="0.9" />
+  <path d="M26.48,93.52 L24.36,95.64" fill="none" stroke="#FFFFFF" stroke-width="3.3"
+      stroke-linecap="round" opacity="0.55" />
+  <path d="M12.6,60 L9.6,60" fill="none" stroke="#FFFFFF" stroke-width="3.3" stroke-linecap="round"
+      opacity="0.9" />
+  <path d="M26.48,26.48 L24.36,24.36" fill="none" stroke="#FFFFFF" stroke-width="3.3"
+      stroke-linecap="round" opacity="0.55" />
+  <path d="M60,60 L34.53,87.12" fill="none" stroke="#FFFFFF" stroke-width="6.6"
+      stroke-linecap="round" />
+  <path d="M54,60 a6,6 0 1,1 12,0 a6,6 0 1,1 -12,0 Z" fill="#FFFFFF" />
+  <path d="M57.6,60 a2.4,2.4 0 1,1 4.8,0 a2.4,2.4 0 1,1 -4.8,0 Z" fill="#11262A" />
+</svg>

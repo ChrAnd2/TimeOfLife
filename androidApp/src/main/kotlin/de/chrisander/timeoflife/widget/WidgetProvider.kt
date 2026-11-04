@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.RemoteViews
 import de.chrisander.timeoflife.MainActivity
@@ -28,7 +29,6 @@ abstract class WidgetProvider : AppWidgetProvider(), KoinComponent {
     private val getLifeProgressUseCase: GetLifeProgressUseCase by inject()
     private val settings: WidgetSettingsRepository by inject()
 
-    /** @param progress `null` before onboarding. */
     protected abstract fun render(
         progress: LifeProgress?,
         legend: List<LegendEntry>,
@@ -36,6 +36,7 @@ abstract class WidgetProvider : AppWidgetProvider(), KoinComponent {
         widthPx: Int,
         heightPx: Int,
         density: Float,
+        typeface: Typeface,
     ): Bitmap
 
     protected abstract fun contentDescription(context: Context, progress: LifeProgress): String
@@ -54,7 +55,6 @@ abstract class WidgetProvider : AppWidgetProvider(), KoinComponent {
         appWidgetId: Int,
         newOptions: Bundle,
     ) {
-        // Redraw at the new size, the bitmap would be blurry otherwise.
         update(context, appWidgetManager, intArrayOf(appWidgetId))
     }
 
@@ -114,7 +114,8 @@ abstract class WidgetProvider : AppWidgetProvider(), KoinComponent {
         val heightPx = options.sizePx(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, density)
             ?: info?.minHeight ?: FALLBACK_SIZE_PX
 
-        val bitmap = render(progress, legend, legendPosition, widthPx, heightPx, density)
+        val typeface = context.resources.getFont(R.font.outfit_semibold)
+        val bitmap = render(progress, legend, legendPosition, widthPx, heightPx, density, typeface)
         return RemoteViews(context.packageName, R.layout.widget).apply {
             setImageViewBitmap(R.id.life_widget_image, bitmap)
             setContentDescription(

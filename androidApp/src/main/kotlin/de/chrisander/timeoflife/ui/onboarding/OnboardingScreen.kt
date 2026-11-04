@@ -158,6 +158,10 @@ private fun SexSelector(
                     selected = sex == selected,
                     onClick = { onSelect(sex) },
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = Sex.entries.size),
+                    colors = SegmentedButtonDefaults.colors(
+                        activeContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        activeContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    ),
                 ) {
                     val sexLabel = when (sex) {
                         Sex.MALE -> R.string.sex_male

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Scalable preview in the widget picker (Android 12+); older versions use the previewImage drawable. -->
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="@string/clock_widget_name"
+    android:scaleType="fitCenter"
+    android:src="@drawable/widget_preview_clock" />

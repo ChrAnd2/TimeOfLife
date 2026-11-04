@@ -2,6 +2,7 @@ package de.chrisander.timeoflife.widget.bar
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import de.chrisander.timeoflife.R
 import de.chrisander.timeoflife.widget.WidgetProvider
 import de.chrisander.timeoflife.widget.domain.model.LifeProgress
@@ -18,7 +19,10 @@ class BarWidgetProvider : WidgetProvider() {
         widthPx: Int,
         heightPx: Int,
         density: Float,
-    ): Bitmap = renderBarWidget(progress, legend, legendPosition, widthPx, heightPx, density)
+        typeface: Typeface,
+    ): Bitmap = renderBarWidget(
+        progress, legend, legendPosition, widthPx, heightPx, density, typeface
+    )
 
     override fun contentDescription(context: Context, progress: LifeProgress): String =
         context.getString(

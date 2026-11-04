@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Only for XML resources that can't use the Compose theme. Keep in sync with ui/theme/BrandPalette.kt. -->
+<resources>
+    <color name="brand_window_background">#FFF6F6FB</color>
+</resources>
