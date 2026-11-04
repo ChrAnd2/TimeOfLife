@@ -25,8 +25,10 @@ the remaining time down by recurring activities (sleep, work, …). Package root
 ./gradlew :androidApp:testDebugUnitTest --tests "*OnboardingViewModelTest.someMethod"
 ```
 
-CI (`.github/workflows/ci.yml`) runs detekt, the debug build and the JVM tests with Kover coverage on every
-pull request and push to `main`. Keep `./gradlew detekt` clean. CI runs on Linux only: never add macOS runners,
+CI (`.github/workflows/ci.yml`) runs on pull requests into `develop`. It first fails if
+`changelog/current.md`
+wasn't changed in the pull request, then runs detekt, the debug build and the JVM tests with Kover
+coverage. Keep `./gradlew detekt` clean. CI runs on Linux only: never add macOS runners,
 so iOS tests run locally only.
 
 iOS app: open `iosApp/` in Xcode. It imports the static `SharedLogic` framework.
