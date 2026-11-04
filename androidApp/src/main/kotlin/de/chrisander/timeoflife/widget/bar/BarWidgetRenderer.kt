@@ -1,3 +1,6 @@
+// Drawing proportions relative to the widget size.
+@file:Suppress("MagicNumber")
+
 package de.chrisander.timeoflife.widget.bar
 
 import android.graphics.Bitmap

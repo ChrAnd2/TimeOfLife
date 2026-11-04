@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package de.chrisander.timeoflife.ui.util
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider

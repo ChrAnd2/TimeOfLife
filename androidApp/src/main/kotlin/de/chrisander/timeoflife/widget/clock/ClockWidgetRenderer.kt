@@ -1,3 +1,6 @@
+// Drawing proportions relative to the widget size.
+@file:Suppress("MagicNumber")
+
 package de.chrisander.timeoflife.widget.clock
 
 import android.graphics.Bitmap
@@ -178,7 +181,9 @@ private fun hourAngle(hour: Int): Float = fractionAngle(hour / 24.0)
 private fun fractionAngle(fraction: Double): Float =
     Math.toRadians(-90.0 + 360.0 * fraction).toFloat()
 
-/** With [LegendPosition.AUTOMATIC]: how much wider than tall (or taller than wide) the widget must be for the legend. */
+/**
+ * With [LegendPosition.AUTOMATIC]: how much wider than tall (or taller than wide) the widget must be for the legend.
+ */
 private const val LEGEND_ASPECT_RATIO = 1.5f
 
 /** Share of the widget's width (side legend) or height (bottom legend) the clock may take at most. */

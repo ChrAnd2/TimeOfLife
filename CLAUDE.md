@@ -17,11 +17,19 @@ the remaining time down by recurring activities (sleep, work, …). Package root
 ./gradlew :sharedLogic:testAndroidHostTest                # sharedLogic commonTest + androidHostTest on the JVM (fastest)
 ./gradlew :sharedLogic:iosSimulatorArm64Test              # sharedLogic tests on iOS simulator (macOS only)
 ./gradlew :androidApp:testDebugUnitTest                   # Android app unit tests (ViewModels, Koin graph check)
+./gradlew detekt                                          # lint all modules and source sets (config/detekt/detekt.yml)
+./gradlew koverHtmlReport koverLog                        # merged JVM test coverage, report in build/reports/kover/
 
 # single test class / method
 ./gradlew :sharedLogic:testAndroidHostTest --tests "de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimatorTest"
 ./gradlew :androidApp:testDebugUnitTest --tests "*OnboardingViewModelTest.someMethod"
 ```
+
+CI (`.github/workflows/ci.yml`) runs on pull requests into `develop`. It first fails if
+`changelog/current.md` wasn't changed in the pull request or if a `TODO(ToL-<n>)` of the branch's
+own ticket is still in the code, then runs detekt, the debug build and the JVM tests with Kover
+coverage. Keep `./gradlew detekt` clean. CI runs on Linux only: never add macOS runners, so iOS
+tests run locally only.
 
 iOS app: open `iosApp/` in Xcode. It imports the static `SharedLogic` framework.
 
@@ -91,6 +99,8 @@ palette, font). Colors come from `ui/theme/BrandPalette.kt`, used by both the Co
 previews and iOS app icons hardcode the palette too, so update them when a brand color changes.
 
 ## Comments
+
+TODO comments must name their ticket, like `// TODO(ToL-123): ...`; detekt rejects any other TODO.
 
 Only add comments to functions where really necessary and have documentation benefints. Never add
 comments just to explain what was generated.

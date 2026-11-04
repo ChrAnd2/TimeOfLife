@@ -36,7 +36,7 @@ class WidgetSettingsActivity : ComponentActivity() {
             TimeOfLifeTheme {
                 WidgetSettingsScreen(
                     viewModel = koinViewModel { parametersOf(appWidgetId) },
-                    onSaved = {
+                    onSave = {
                         Widgets.requestUpdate(this, appWidgetId)
                         setResult(RESULT_OK, result)
                         finish()

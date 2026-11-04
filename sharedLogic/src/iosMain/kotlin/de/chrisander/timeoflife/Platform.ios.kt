@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package de.chrisander.timeoflife
 
 import platform.UIKit.UIDevice

@@ -1,0 +1,21 @@
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - Composable
+
+style:
+  ForbiddenComment:
+    comments:
+      - value: 'FIXME:'
+        reason: 'Forbidden FIXME marker in comment, please fix the problem.'
+      - value: 'STOPSHIP:'
+        reason: 'Forbidden STOPSHIP marker in comment, please take the necessary action.'
+      - value: '(?-i)\bTODO\b(?!\(ToL-\d+\))'
+        reason: 'TODOs must reference their ticket, e.g. TODO(ToL-123): ...'
+  MagicNumber:
+    ignoreEnums: true
+    ignoreAnnotated:
+      - Preview
+    excludes:
+      - '**/test/**'
+      - '**/*Test/**'

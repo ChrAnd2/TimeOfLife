@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package de.chrisander.timeoflife
 
 import android.os.Build

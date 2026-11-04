@@ -10,7 +10,7 @@ import de.chrisander.timeoflife.domain.model.profile.Sex
  * - Germany: Destatis, Sterbetafel 2024 – https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Sterbefaelle-Lebenserwartung/_inhalt.html
  * - Global: WHO Global Health Estimates, 2019 – https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-life-expectancy-and-healthy-life-expectancy
  *
- * TODO: Add more countries, ideally from a full dataset such as UN World Population Prospects.
+ * TODO(ToL-13): Add more countries, ideally from a full dataset such as UN World Population Prospects.
  */
 object StaticBaselineLifeExpectancyProvider : BaselineLifeExpectancyProvider {
 
