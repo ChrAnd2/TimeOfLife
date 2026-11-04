@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    name: Lint, build, test (Android/JVM)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Lint (detekt)
+        run: ./gradlew detekt
+
+      - name: Build
+        run: ./gradlew :androidApp:assembleDebug
+
+      - name: Test
+        run: ./gradlew :sharedLogic:testAndroidHostTest :androidApp:testDebugUnitTest
+
+      - name: Coverage
+        run: |
+          ./gradlew koverXmlReport koverHtmlReport
+          echo "### Line coverage" >> "$GITHUB_STEP_SUMMARY"
+          ./gradlew koverLog --quiet | grep '%' | sed 's/^/- /' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports
+          path: |
+            **/build/reports/detekt/
+            **/build/reports/tests/
+            **/build/test-results/
+            build/reports/kover/
+          if-no-files-found: ignore
+
