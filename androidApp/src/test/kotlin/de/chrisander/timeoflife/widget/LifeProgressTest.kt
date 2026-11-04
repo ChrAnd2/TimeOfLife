@@ -39,7 +39,8 @@ class LifeProgressTest {
             freeTimeRemaining = remaining,
         )
 
-    // Shares are powers of two (1/2, 1/4, 1/8), which doubles represent exactly, so results compare with plain equality.
+    // Shares are powers of two (1/2, 1/4, 1/8), which doubles represent exactly,
+    // so results compare with plain equality.
     @Test
     fun livedTimeIsSplitIntoActivitiesAndFreeTime() {
         val progress =

@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,12 +31,13 @@ import de.chrisander.timeoflife.widget.legend.LegendPosition
 @Composable
 fun WidgetSettingsScreen(
     viewModel: WidgetSettingsViewModel,
-    onSaved: () -> Unit,
+    onSave: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val currentOnSave by rememberUpdatedState(onSave)
 
     LaunchedEffect(uiState.isSaved) {
-        if (uiState.isSaved) onSaved()
+        if (uiState.isSaved) currentOnSave()
     }
 
     WidgetSettingsContent(uiState = uiState, onEvent = viewModel::onEvent)

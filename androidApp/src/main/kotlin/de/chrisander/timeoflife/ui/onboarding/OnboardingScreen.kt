@@ -34,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -74,13 +75,11 @@ private fun OnboardingContent(
     modifier: Modifier = Modifier,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val saveErrorMessage = stringResource(R.string.onboarding_save_error)
-    LaunchedEffect(uiState.showSaveError) {
-        if (uiState.showSaveError) {
-            snackbarHostState.showSnackbar(saveErrorMessage)
-            onEvent(OnboardingEvent.DismissError)
-        }
-    }
+    SaveErrorSnackbar(
+        show = uiState.showSaveError,
+        snackbarHostState = snackbarHostState,
+        onDismiss = { onEvent(OnboardingEvent.DismissError) },
+    )
 
     Scaffold(
         modifier = modifier,
@@ -138,6 +137,22 @@ private fun OnboardingContent(
             ) {
                 Text(stringResource(R.string.onboarding_submit))
             }
+        }
+    }
+}
+
+@Composable
+private fun SaveErrorSnackbar(
+    show: Boolean,
+    snackbarHostState: SnackbarHostState,
+    onDismiss: () -> Unit,
+) {
+    val message = stringResource(R.string.onboarding_save_error)
+    val currentOnDismiss by rememberUpdatedState(onDismiss)
+    LaunchedEffect(show) {
+        if (show) {
+            snackbarHostState.showSnackbar(message)
+            currentOnDismiss()
         }
     }
 }

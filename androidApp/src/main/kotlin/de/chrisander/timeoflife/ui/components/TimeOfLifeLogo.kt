@@ -41,7 +41,7 @@ fun TimeOfLifeLogo(
     Row(
         modifier = modifier.semantics(mergeDescendants = true) { contentDescription = appName },
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(height * 0.22f),
+        horizontalArrangement = Arrangement.spacedBy(height * HORIZONTAL_SPACING_FACTOR),
     ) {
         Image(
             painter = painterResource(R.drawable.ic_logo_mark),
@@ -82,3 +82,5 @@ private fun TimeOfLifeLogoPreview() {
         }
     }
 }
+
+private const val HORIZONTAL_SPACING_FACTOR = 0.22f

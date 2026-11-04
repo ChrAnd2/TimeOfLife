@@ -27,6 +27,8 @@ class BarWidgetProvider : WidgetProvider() {
     override fun contentDescription(context: Context, progress: LifeProgress): String =
         context.getString(
             R.string.bar_widget_content_description,
-            (progress.progress * 100).roundToInt()
+            (progress.progress * PERCENT).roundToInt()
         )
 }
+
+private const val PERCENT = 100

@@ -50,8 +50,9 @@ class LifeTimeCalculator {
             beyondLifespan = (livedDays - lifespanDays).coerceAtLeast(0).days,
             activities = activityTimes,
             // Activities with more than 24 h per day combined would make this negative.
-            freeTimeRemaining = (remaining - activityTimes.fold(Duration.ZERO) { sum, it -> sum + it.remaining })
-                .coerceAtLeast(Duration.ZERO),
+            freeTimeRemaining = (
+                remaining - activityTimes.fold(Duration.ZERO) { sum, activity -> sum + activity.remaining }
+            ).coerceAtLeast(Duration.ZERO),
         )
     }
 
