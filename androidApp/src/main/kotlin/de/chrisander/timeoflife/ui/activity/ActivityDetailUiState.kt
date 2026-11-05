@@ -38,6 +38,15 @@ sealed interface ActivityCalculation {
         val age: Double,
     ) : ActivityCalculation
 
-    /** Free time has no schedule: it is whatever the activities leave. */
-    data object FreeTime : ActivityCalculation
+    /**
+     * Free time has no schedule: it is whatever the activities leave of an average day.
+     *
+     * @property daySoFar an average day of the life so far: free time first, then the activities, largest first.
+     * Each fraction is its share of the day.
+     * @property dayAhead the same for the time ahead; empty once the life span is outlived.
+     */
+    data class FreeTime(
+        val daySoFar: List<LifeSegment>,
+        val dayAhead: List<LifeSegment>,
+    ) : ActivityCalculation
 }

@@ -55,7 +55,10 @@ class ActivityDetailMapperTest {
         val detail = breakdown.activityDetail(null)!!
 
         assertIs<LifeSegment.FreeTime>(detail.segment)
-        assertIs<ActivityCalculation.FreeTime>(detail.calculation)
+        val calculation = assertIs<ActivityCalculation.FreeTime>(detail.calculation)
+        assertIs<LifeSegment.FreeTime>(calculation.daySoFar.first())
+        assertClose(1.0, calculation.daySoFar.sumOf { it.fraction })
+        assertClose(1.0, calculation.dayAhead.sumOf { it.fraction })
         val activitiesSoFar = breakdown.activities.sumOf { it.spent.inWholeHours } / 24.0 / 365.2425
         assertClose(40.0 - activitiesSoFar, detail.yearsSpent, tolerance = 0.01)
         assertTrue(detail.yearsSpent > 0)

@@ -39,12 +39,13 @@
     <string name="activity_detail_share_of_remaining">%1$s %% of your time ahead</string>
     <string name="activity_detail_share_of_lifespan">%1$s %% of your life span</string>
     <string name="detail_schedule_title">Your schedule</string>
-    <string name="detail_free_time_title">On average</string>
+    <string name="detail_free_time_title">Your average day</string>
     <string name="detail_how_often">How often</string>
     <string name="detail_per_day">Per day on average</string>
     <string name="detail_when">When</string>
-    <string name="detail_per_day_so_far">Per day so far</string>
-    <string name="detail_per_day_ahead">Per day ahead</string>
+    <string name="detail_so_far">So far</string>
+    <string name="detail_free_per_day">%1$s free</string>
+    <string name="detail_segment_per_day">%1$s · %2$s</string>
     <string name="detail_today">Today</string>
     <string name="detail_birth">Birth</string>
     <string name="when_whole_life">Your whole life</string>

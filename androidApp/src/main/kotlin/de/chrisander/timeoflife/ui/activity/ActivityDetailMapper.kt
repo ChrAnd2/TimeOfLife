@@ -34,8 +34,24 @@ private fun LifeTimeBreakdown.freeTimeDetail(): ActivityDetail {
         segment = LifeSegment.FreeTime(spent shareOf lived),
         spent = spent,
         ahead = freeTimeRemaining,
-        calculation = ActivityCalculation.FreeTime,
+        calculation = ActivityCalculation.FreeTime(
+            daySoFar = averageDay(spent, lived) { it.spent },
+            dayAhead = averageDay(freeTimeRemaining, remaining) { it.remaining },
+        ),
     )
+}
+
+private fun LifeTimeBreakdown.averageDay(
+    freeTime: Duration,
+    whole: Duration,
+    time: (ActivityTime) -> Duration,
+): List<LifeSegment> {
+    if (whole <= Duration.ZERO) return emptyList()
+    val activities = activities
+        .map { LifeSegment.ActivitySegment(it.activity, time(it) shareOf whole) }
+        .filter { it.fraction > 0 }
+        .sortedByDescending { it.fraction }
+    return listOf(LifeSegment.FreeTime(freeTime shareOf whole)) + activities
 }
 
 private fun LifeTimeBreakdown.detail(
