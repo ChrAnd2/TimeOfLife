@@ -2,7 +2,9 @@ package de.chrisander.timeoflife.di
 
 import de.chrisander.timeoflife.data.datastore.createDataStore
 import de.chrisander.timeoflife.ui.MainViewModel
+import de.chrisander.timeoflife.ui.activity.ActivityDetailViewModel
 import de.chrisander.timeoflife.ui.home.HomeViewModel
+import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
 import de.chrisander.timeoflife.ui.onboarding.OnboardingViewModel
 import de.chrisander.timeoflife.widget.GetLifeProgressUseCase
@@ -28,6 +30,7 @@ val appModule = module {
     viewModelOf(::MainViewModel)
     viewModelOf(::OnboardingViewModel)
     viewModelOf(::HomeViewModel)
+    viewModel { (route: ActivityDetailRoute) -> ActivityDetailViewModel(route, get(), get(), get(), get()) }
 
     factoryOf(::GetLifeProgressUseCase)
     single<WidgetSettingsDataSource> {

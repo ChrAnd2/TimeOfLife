@@ -6,3 +6,5 @@
 - Added bar widget
 - Added company design
 - Added pipeline
+- Added home screen
+- Added activity details

@@ -26,7 +26,7 @@ In the app, use the `TimeOfLifeLogo` composable instead of an image.
 ## Colors
 
 The palette is bright, sunny accents (teal, orange, sun yellow, green) on deep teal surfaces in dark
-mode and a warm cream in light mode. Activity colors are fixed, so the same activity looks the same
+mode and a cool, slightly teal-tinted off-white with white cards in light mode. Activity colors are fixed, so the same activity looks the same
 in the app, in both widgets and in the logo.
 
 | Name       | Hex       | Use                                        |
@@ -35,7 +35,7 @@ in the app, in both widgets and in the logo.
 | Panel      | `#11262A` | Widget panels, clock face, dark containers |
 | Rim        | `#2A4A50` | Clock rim, dividers on dark                |
 | Future     | `#1F3B40` | Time not lived yet                         |
-| Cream      | `#FFFBF2` | Light background                           |
+| Mist       | `#F3F6F6` | Light background                           |
 | Ink        | `#0F2A2E` | Text on light                              |
 | Teal       | `#14B8A6` | Brand color, app icon; sleep               |
 | Teal light | `#5EEAD4` | Primary on dark                            |

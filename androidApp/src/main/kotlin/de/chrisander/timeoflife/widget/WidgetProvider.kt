@@ -11,8 +11,8 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import de.chrisander.timeoflife.MainActivity
 import de.chrisander.timeoflife.R
+import de.chrisander.timeoflife.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.data.repository.WidgetSettingsRepository
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.legend.LegendEntry
 import de.chrisander.timeoflife.widget.legend.LegendPosition
 import de.chrisander.timeoflife.widget.legend.legendEntries

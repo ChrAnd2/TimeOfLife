@@ -1,8 +1,8 @@
 package de.chrisander.timeoflife.widget
 
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
+import de.chrisander.timeoflife.domain.model.LifeProgress
 import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.mapper.toLifeProgress
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.TimeZone

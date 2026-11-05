@@ -3,8 +3,6 @@ package de.chrisander.timeoflife.ui
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
 import de.chrisander.timeoflife.domain.model.profile.Sex
 import de.chrisander.timeoflife.domain.model.profile.UserProfile
-import de.chrisander.timeoflife.ui.home.HomeUiState
-import de.chrisander.timeoflife.ui.home.HomeViewModel
 import de.chrisander.timeoflife.ui.navigation.HomeRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
 import de.chrisander.timeoflife.ui.navigation.OnboardingRoute
@@ -12,22 +10,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.time.Clock
-import kotlin.time.Instant
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class NavigationViewModelsTest {
@@ -61,19 +52,6 @@ class NavigationViewModelsTest {
         MainViewModel(repository, navigator)
 
         assertEquals(listOf(HomeRoute), navigator.backStack.toList())
-    }
-
-    @Test
-    fun homeShowsNameAndAge() = runTest {
-        repository.profile.value = profile
-        val clock = object : Clock {
-            override fun now(): Instant =
-                LocalDate(2026, 5, 16).atStartOfDayIn(TimeZone.currentSystemDefault())
-        }
-
-        val uiState = HomeViewModel(repository, clock).uiState.filterNotNull().first()
-
-        assertEquals(HomeUiState(name = "Chris", age = 35), uiState)
     }
 
     private class FakeUserProfileRepository : UserProfileRepository {

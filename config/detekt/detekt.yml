@@ -3,6 +3,11 @@ naming:
     ignoreAnnotated:
       - Composable
 
+complexity:
+  LongMethod:
+    ignoreAnnotated:
+      - Composable
+
 style:
   ForbiddenComment:
     comments:

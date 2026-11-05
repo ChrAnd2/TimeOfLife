@@ -1,8 +1,10 @@
 package de.chrisander.timeoflife.ui.theme
 
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 
 internal val LightColors = lightColorScheme(
     primary = Color(0xFF00796E),
@@ -17,17 +19,17 @@ internal val LightColors = lightColorScheme(
     onTertiary = Color(BrandPalette.WHITE),
     tertiaryContainer = Color(0xFFFFEFB3),
     onTertiaryContainer = Color(0xFF261A00),
-    background = Color(BrandPalette.CREAM),
+    background = Color(BrandPalette.MIST),
     onBackground = Color(BrandPalette.INK),
-    surface = Color(BrandPalette.CREAM),
+    surface = Color(BrandPalette.MIST),
     onSurface = Color(BrandPalette.INK),
-    surfaceVariant = Color(0xFFE3EDEA),
+    surfaceVariant = Color(0xFFE1EAEA),
     onSurfaceVariant = Color(0xFF4A6266),
     surfaceContainerLowest = Color(BrandPalette.WHITE),
-    surfaceContainerLow = Color(0xFFFAF6EC),
-    surfaceContainer = Color(0xFFF4F1E7),
-    surfaceContainerHigh = Color(0xFFEEEBE1),
-    surfaceContainerHighest = Color(0xFFE8E6DC),
+    surfaceContainerLow = Color(0xFFEEF3F3),
+    surfaceContainer = Color(0xFFE8EEEE),
+    surfaceContainerHigh = Color(0xFFE2E9E9),
+    surfaceContainerHighest = Color(0xFFDCE4E4),
     outline = Color(0xFF74898C),
     outlineVariant = Color(0xFFC6D3D1),
     error = Color(0xFFBA1A1A),
@@ -63,3 +65,9 @@ internal val DarkColors = darkColorScheme(
     error = Color(0xFFFFB4AB),
     onError = Color(0xFF690005),
 )
+
+/** Cards are white on the light background and a raised panel on the dark one. */
+val ColorScheme.card: Color
+    get() = if (background.luminance() > HALF_LUMINANCE) surfaceContainerLowest else surfaceContainer
+
+private const val HALF_LUMINANCE = 0.5f

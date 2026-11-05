@@ -1,6 +1,7 @@
 package de.chrisander.timeoflife.di
 
 import android.content.Context
+import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.module
 import org.koin.test.verify.verify
@@ -13,7 +14,8 @@ class KoinModulesTest {
     @Test
     fun allDependenciesCanBeResolved() {
         module { includes(appModules) }.verify(
-            extraTypes = listOf(Context::class),
+            // Injected at runtime with parametersOf.
+            extraTypes = listOf(Context::class, ActivityDetailRoute::class),
         )
     }
 }
