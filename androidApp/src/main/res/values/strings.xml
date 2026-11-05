@@ -14,10 +14,46 @@
     <string name="sex_female">Female</string>
     <string name="sex_diverse">Diverse</string>
 
-    <string name="home_greeting">Hello, %1$s!</string>
-    <plurals name="home_age">
-        <item quantity="one">You are %1$d year old.</item>
-        <item quantity="other">You are %1$d years old.</item>
+    <string name="home_greeting_morning">Good morning, %1$s</string>
+    <string name="home_greeting_afternoon">Good afternoon, %1$s</string>
+    <string name="home_greeting_evening">Good evening, %1$s</string>
+    <string name="home_greeting_night">Still up, %1$s?</string>
+    <string name="home_expected_years">years</string>
+    <string name="home_expected_label">Your expected life span</string>
+    <string name="home_expected_until">until %1$s</string>
+    <string name="home_bonus_body">You\'ve outlived your estimate by %1$s years. Every day from here is a gift.</string>
+    <string name="home_activities_title">Your activities</string>
+    <string name="home_activities_caption">How you\'ve spent your life so far</string>
+    <plurals name="home_activity_years">
+        <item quantity="one">%1$s year</item>
+        <item quantity="other">%1$s years</item>
+    </plurals>
+    <string name="home_activity_share">%1$s %%</string>
+
+    <string name="activity_free_time_description">What your activities leave you</string>
+
+    <string name="schedule_whole_life">since birth</string>
+    <string name="schedule_from_age">from %1$d</string>
+    <string name="schedule_until_age">until %1$d</string>
+    <string name="schedule_age_range">%1$d to %2$d</string>
+    <string name="duration_hours">%1$d h</string>
+    <string name="duration_minutes">%1$d min</string>
+    <string name="duration_hours_minutes">%1$d h %2$d min</string>
+    <plurals name="every_days">
+        <item quantity="one">a day</item>
+        <item quantity="other">every %1$d days</item>
+    </plurals>
+    <plurals name="every_weeks">
+        <item quantity="one">a week</item>
+        <item quantity="other">every %1$d weeks</item>
+    </plurals>
+    <plurals name="every_months">
+        <item quantity="one">a month</item>
+        <item quantity="other">every %1$d months</item>
+    </plurals>
+    <plurals name="every_years">
+        <item quantity="one">a year</item>
+        <item quantity="other">every %1$d years</item>
     </plurals>
 
     <string name="clock_widget_name">Life clock</string>

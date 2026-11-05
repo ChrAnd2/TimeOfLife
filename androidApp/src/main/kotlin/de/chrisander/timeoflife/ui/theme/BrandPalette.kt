@@ -10,7 +10,7 @@ object BrandPalette {
     const val PANEL_HIGH = 0xFF183136
     const val RIM = 0xFF2A4A50
     const val FUTURE = 0xFF1F3B40
-    const val CREAM = 0xFFFFFBF2
+    const val MIST = 0xFFF3F6F6
     const val INK = 0xFF0F2A2E
     const val WHITE = 0xFFFFFFFF
 
