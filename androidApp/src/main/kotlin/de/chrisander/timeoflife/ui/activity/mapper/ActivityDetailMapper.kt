@@ -1,23 +1,24 @@
-package de.chrisander.timeoflife.ui.activity
+package de.chrisander.timeoflife.ui.activity.mapper
 
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.ActivityId
 import de.chrisander.timeoflife.domain.model.lifetime.ActivityTime
 import de.chrisander.timeoflife.domain.model.lifetime.LifeTimeBreakdown
-import de.chrisander.timeoflife.ui.home.freeTimeSpent
-import de.chrisander.timeoflife.ui.home.inYears
-import de.chrisander.timeoflife.ui.home.shareOf
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
+import de.chrisander.timeoflife.ui.activity.ActivityCalculation
+import de.chrisander.timeoflife.ui.activity.ActivityDetailUiState
+import de.chrisander.timeoflife.ui.home.mapper.freeTimeSpent
+import de.chrisander.timeoflife.ui.home.mapper.inYears
+import de.chrisander.timeoflife.ui.home.mapper.shareOf
 import kotlin.time.Duration
 
-/** @param activityId `null` for free time. Returns `null` if there is no such activity. */
-fun LifeTimeBreakdown.activityDetail(activityId: ActivityId?): ActivityDetail? =
+fun LifeTimeBreakdown.activityDetail(activityId: ActivityId?): ActivityDetailUiState? =
     if (activityId == null) {
         freeTimeDetail()
     } else {
         activities.firstOrNull { it.activity.id == activityId }?.let(::activityDetail)
     }
 
-private fun LifeTimeBreakdown.activityDetail(time: ActivityTime): ActivityDetail = detail(
+private fun LifeTimeBreakdown.activityDetail(time: ActivityTime): ActivityDetailUiState = detail(
     segment = LifeSegment.ActivitySegment(time.activity, time.spent shareOf lived),
     spent = time.spent,
     ahead = time.remaining,
@@ -28,7 +29,7 @@ private fun LifeTimeBreakdown.activityDetail(time: ActivityTime): ActivityDetail
     ),
 )
 
-private fun LifeTimeBreakdown.freeTimeDetail(): ActivityDetail {
+private fun LifeTimeBreakdown.freeTimeDetail(): ActivityDetailUiState {
     val spent = freeTimeSpent
     return detail(
         segment = LifeSegment.FreeTime(spent shareOf lived),
@@ -59,7 +60,7 @@ private fun LifeTimeBreakdown.detail(
     spent: Duration,
     ahead: Duration,
     calculation: ActivityCalculation,
-) = ActivityDetail(
+) = ActivityDetailUiState(
     segment = segment,
     yearsSpent = spent.inYears(),
     shareOfLived = spent shareOf lived,

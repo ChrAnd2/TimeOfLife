@@ -7,8 +7,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import de.chrisander.timeoflife.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.WidgetColors
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -18,7 +18,7 @@ import kotlin.math.sin
  *
  * @param progress `null` draws an empty face without hands, e.g. before onboarding.
  */
-internal fun Canvas.drawLifeClock(
+internal fun Canvas.drawClock(
     progress: LifeProgress?,
     cx: Float,
     cy: Float,

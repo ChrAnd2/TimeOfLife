@@ -1,15 +1,15 @@
 package de.chrisander.timeoflife.ui.activity
 
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.Activity
 import de.chrisander.timeoflife.domain.model.activity.ActivityId
 import de.chrisander.timeoflife.domain.model.activity.DefaultActivityType
 import de.chrisander.timeoflife.domain.model.lifespan.Lifespan
 import de.chrisander.timeoflife.domain.usecase.LifeTimeCalculator
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
+import de.chrisander.timeoflife.ui.activity.mapper.activityDetail
 import kotlinx.datetime.LocalDate
 import kotlin.math.abs
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNull
 import kotlin.test.assertTrue

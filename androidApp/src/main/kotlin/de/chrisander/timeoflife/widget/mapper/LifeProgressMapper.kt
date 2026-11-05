@@ -1,8 +1,8 @@
 package de.chrisander.timeoflife.widget.mapper
 
+import de.chrisander.timeoflife.domain.model.LifeProgress
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.lifetime.LifeTimeBreakdown
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
 import kotlin.time.Duration
 
 fun LifeTimeBreakdown.toLifeProgress(): LifeProgress {

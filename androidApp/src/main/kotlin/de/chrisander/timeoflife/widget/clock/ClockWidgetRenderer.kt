@@ -6,8 +6,8 @@ package de.chrisander.timeoflife.widget.clock
 import android.graphics.Bitmap
 import android.graphics.RectF
 import android.graphics.Typeface
+import de.chrisander.timeoflife.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.MIN_LEGEND_ROW_DP
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
 import de.chrisander.timeoflife.widget.drawPanel
 import de.chrisander.timeoflife.widget.legend.LegendEntry
 import de.chrisander.timeoflife.widget.legend.LegendPosition
@@ -39,7 +39,7 @@ internal fun renderClockWidget(
         LegendPosition.SIDE -> {
             val clockSize = min(height.toFloat(), width * MAX_CLOCK_SHARE_WITH_LEGEND)
             drawPanel(width, height)
-            drawLifeClock(
+            drawClock(
                 progress,
                 clockSize / 2,
                 height / 2f,
@@ -56,7 +56,7 @@ internal fun renderClockWidget(
         LegendPosition.BOTTOM -> {
             val clockSize = min(width.toFloat(), height * MAX_CLOCK_SHARE_WITH_LEGEND)
             drawPanel(width, height)
-            drawLifeClock(
+            drawClock(
                 progress,
                 width / 2f,
                 clockSize / 2,
@@ -70,7 +70,7 @@ internal fun renderClockWidget(
             )
         }
 
-        else -> drawLifeClock(
+        else -> drawClock(
             progress,
             width / 2f,
             height / 2f,

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
 import de.chrisander.timeoflife.domain.model.activity.ActivityId
 import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
+import de.chrisander.timeoflife.ui.home.mapper.toLifeOverview
 import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +26,7 @@ class HomeViewModel(
     private val navigator: Navigator,
 ) : ViewModel() {
 
-    val uiState: StateFlow<HomeUiState> = userProfileRepository.userProfile
+    val uiState: StateFlow<HomeUiState?> = userProfileRepository.userProfile
         .filterNotNull()
         .map { profile ->
             val now = clock.now().toLocalDateTime(TimeZone.currentSystemDefault())
@@ -34,11 +35,10 @@ class HomeViewModel(
                 timeOfDay = TimeOfDay.of(now.hour),
                 life = getLifeTimeBreakdown(profile, now.date).toLifeOverview(),
             )
-        }
-        .stateIn(
+        }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5.seconds),
-            initialValue = HomeUiState(),
+            initialValue = null,
         )
 
     /** @param activityId `null` opens free time. */

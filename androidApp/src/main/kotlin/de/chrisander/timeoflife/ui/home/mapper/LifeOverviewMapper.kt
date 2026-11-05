@@ -1,8 +1,10 @@
-package de.chrisander.timeoflife.ui.home
+package de.chrisander.timeoflife.ui.home.mapper
 
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.lifetime.DAYS_PER_YEAR
 import de.chrisander.timeoflife.domain.model.lifetime.LifeTimeBreakdown
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
+import de.chrisander.timeoflife.ui.home.ActivityOverview
+import de.chrisander.timeoflife.ui.home.LifeOverview
 import de.chrisander.timeoflife.widget.mapper.toLifeProgress
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -36,7 +38,6 @@ private fun LifeTimeBreakdown.activityOverviews(): List<ActivityOverview> {
         .sortedByDescending { it.yearsSpent }
 }
 
-/** Lived time not taken up by any activity. Activities with more than 24 h per day combined would make it negative. */
 internal val LifeTimeBreakdown.freeTimeSpent: Duration
     get() {
         val activitiesSpent = activities.fold(Duration.ZERO) { sum, activity -> sum + activity.spent }

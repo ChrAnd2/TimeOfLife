@@ -42,9 +42,12 @@ import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
 import de.chrisander.timeoflife.domain.usecase.LifeTimeCalculator
 import de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimator
-import de.chrisander.timeoflife.ui.home.color
-import de.chrisander.timeoflife.ui.home.label
-import de.chrisander.timeoflife.ui.home.yearsText
+import de.chrisander.timeoflife.ui.activity.mapper.activityDetail
+import de.chrisander.timeoflife.ui.formatter.color
+import de.chrisander.timeoflife.ui.formatter.description
+import de.chrisander.timeoflife.ui.formatter.formatPercent
+import de.chrisander.timeoflife.ui.formatter.label
+import de.chrisander.timeoflife.ui.formatter.yearsText
 import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
 import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
 import de.chrisander.timeoflife.ui.theme.card
@@ -63,7 +66,7 @@ fun ActivityDetailScreen(
 
 @Composable
 private fun ActivityDetailContent(
-    uiState: ActivityDetailUiState,
+    uiState: ActivityDetailUiState?,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -81,20 +84,21 @@ private fun ActivityDetailContent(
                     contentDescription = stringResource(R.string.activity_detail_back),
                 )
             }
-            val detail = uiState.detail
-            if (uiState.isLoading) {
+            if (uiState == null) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
-            } else if (detail != null) {
+            } else {
                 Column(
                     modifier = Modifier.padding(start = 12.dp, top = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    Header(detail)
-                    SpentSoFar(detail, Modifier.fillMaxWidth().padding(vertical = 16.dp))
-                    AheadAndWholeLife(detail)
-                    Schedule(detail, Modifier.padding(top = 16.dp))
+                    Header(uiState)
+                    SpentSoFar(uiState, Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp))
+                    AheadAndWholeLife(uiState)
+                    Schedule(uiState, Modifier.padding(top = 16.dp))
                 }
             }
         }
@@ -102,33 +106,32 @@ private fun ActivityDetailContent(
 }
 
 @Composable
-private fun Header(detail: ActivityDetail) {
+private fun Header(state: ActivityDetailUiState) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 Modifier
                     .size(16.dp)
                     .clip(CircleShape)
-                    .background(detail.segment.color),
+                    .background(state.segment.color),
             )
             Text(
-                text = detail.segment.label(),
+                text = state.segment.label(),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(start = 12.dp),
             )
         }
         Text(
-            text = detail.segment.description(),
+            text = state.segment.description(),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
 
-/** The headline number, built like the life span on the home screen, with a pill in the activity's color. */
 @Composable
 private fun SpentSoFar(
-    detail: ActivityDetail,
+    state: ActivityDetailUiState,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -138,18 +141,21 @@ private fun SpentSoFar(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(
-            text = yearsText(detail.yearsSpent),
+            text = yearsText(state.yearsSpent),
             style = MaterialTheme.typography.displayMedium,
             color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
         )
         Surface(
             shape = CircleShape,
-            color = detail.segment.color.copy(alpha = PILL_ALPHA),
+            color = state.segment.color.copy(alpha = PILL_ALPHA),
             modifier = Modifier.padding(top = 4.dp),
         ) {
             Text(
-                text = stringResource(R.string.activity_detail_share_of_lived, formatPercent(detail.shareOfLived)),
+                text = stringResource(
+                    R.string.activity_detail_share_of_lived,
+                    formatPercent(state.shareOfLived)
+                ),
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
@@ -158,7 +164,7 @@ private fun SpentSoFar(
 }
 
 @Composable
-private fun AheadAndWholeLife(detail: ActivityDetail) {
+private fun AheadAndWholeLife(state: ActivityDetailUiState) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -167,10 +173,10 @@ private fun AheadAndWholeLife(detail: ActivityDetail) {
     ) {
         NumberTile(
             title = stringResource(R.string.activity_detail_ahead),
-            years = detail.yearsAhead,
+            years = state.yearsAhead,
             share = stringResource(
                 R.string.activity_detail_share_of_remaining,
-                formatPercent(detail.shareOfRemaining),
+                formatPercent(state.shareOfRemaining),
             ),
             modifier = Modifier
                 .weight(1f)
@@ -178,10 +184,10 @@ private fun AheadAndWholeLife(detail: ActivityDetail) {
         )
         NumberTile(
             title = stringResource(R.string.activity_detail_whole_life),
-            years = detail.yearsTotal,
+            years = state.yearsTotal,
             share = stringResource(
                 R.string.activity_detail_share_of_lifespan,
-                formatPercent(detail.shareOfLifespan),
+                formatPercent(state.shareOfLifespan),
             ),
             modifier = Modifier
                 .weight(1f)
@@ -238,10 +244,10 @@ private fun ActivityDetailContentPreview() {
             LifeTimeCalculator(),
         )
         val profile = UserProfile("Chris", Sex.MALE, LocalDate(1990, 5, 17))
-        val detail = getLifeTimeBreakdown(profile, LocalDate(2026, 11, 4))
+        val state = getLifeTimeBreakdown(profile, LocalDate(2026, 11, 4))
             .activityDetail(ActivityId("default:WORK"))
         ActivityDetailContent(
-            uiState = ActivityDetailUiState(isLoading = false, detail = detail),
+            uiState = state,
             onBack = {},
         )
     }

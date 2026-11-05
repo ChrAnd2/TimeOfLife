@@ -2,6 +2,7 @@ package de.chrisander.timeoflife.ui.home
 
 import de.chrisander.timeoflife.data.datasource.StaticBaselineLifeExpectancyProvider
 import de.chrisander.timeoflife.data.repository.UserProfileRepository
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.ActivityId
 import de.chrisander.timeoflife.domain.model.profile.LifespanSetting
 import de.chrisander.timeoflife.domain.model.profile.Sex
@@ -12,11 +13,11 @@ import de.chrisander.timeoflife.domain.usecase.LifespanEstimator
 import de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimator
 import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -123,7 +124,7 @@ class HomeViewModelTest {
     }
 
     private suspend fun loadUiState(at: LocalDateTime): HomeUiState =
-        homeViewModel(at).uiState.first { it.life != null }
+        homeViewModel(at).uiState.filterNotNull().first()
 
     private fun homeViewModel(at: LocalDateTime, navigator: Navigator = Navigator()): HomeViewModel {
         val clock = object : Clock {

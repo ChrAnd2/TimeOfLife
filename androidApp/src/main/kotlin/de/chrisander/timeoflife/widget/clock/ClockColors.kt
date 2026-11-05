@@ -2,7 +2,6 @@ package de.chrisander.timeoflife.widget.clock
 
 import de.chrisander.timeoflife.widget.WidgetColors
 
-/** ARGB colors of the clock's parts. Activity colors are fixed and not part of it. */
 internal data class ClockColors(
     val face: Int,
     val rim: Int,

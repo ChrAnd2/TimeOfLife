@@ -1,4 +1,4 @@
-package de.chrisander.timeoflife.ui.home
+package de.chrisander.timeoflife.ui.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -17,11 +17,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import de.chrisander.timeoflife.R
+import de.chrisander.timeoflife.domain.model.LifeProgress
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.ui.theme.card
 import de.chrisander.timeoflife.widget.clock.ClockColors
-import de.chrisander.timeoflife.widget.clock.drawLifeClock
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
+import de.chrisander.timeoflife.widget.clock.drawClock
 import kotlin.math.min
 
 /**
@@ -29,7 +29,7 @@ import kotlin.math.min
  * first appears.
  */
 @Composable
-fun LifeClock(
+fun Clock(
     progress: LifeProgress,
     modifier: Modifier = Modifier,
 ) {
@@ -55,7 +55,7 @@ fun LifeClock(
     ) {
         val shown = progress.sweptTo(sweep.value.toDouble())
         drawIntoCanvas {
-            it.nativeCanvas.drawLifeClock(
+            it.nativeCanvas.drawClock(
                 shown,
                 center.x,
                 center.y,

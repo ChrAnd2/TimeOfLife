@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,18 +28,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.chrisander.timeoflife.R
-import de.chrisander.timeoflife.ui.home.color
-import de.chrisander.timeoflife.ui.home.label
+import de.chrisander.timeoflife.data.datasource.StaticBaselineLifeExpectancyProvider
+import de.chrisander.timeoflife.domain.model.LifeSegment
+import de.chrisander.timeoflife.domain.model.activity.ActivityId
+import de.chrisander.timeoflife.domain.model.profile.Sex
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
+import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
+import de.chrisander.timeoflife.domain.usecase.LifeTimeCalculator
+import de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimator
+import de.chrisander.timeoflife.ui.activity.formatter.whenText
+import de.chrisander.timeoflife.ui.activity.mapper.activityDetail
+import de.chrisander.timeoflife.ui.formatter.color
+import de.chrisander.timeoflife.ui.formatter.label
+import de.chrisander.timeoflife.ui.formatter.perDayText
+import de.chrisander.timeoflife.ui.formatter.text
+import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
 import de.chrisander.timeoflife.ui.theme.card
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
+import kotlinx.datetime.LocalDate
 import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
 internal fun Schedule(
-    detail: ActivityDetail,
+    detail: ActivityDetailUiState,
     modifier: Modifier = Modifier,
 ) {
     val calculation = detail.calculation
@@ -92,7 +105,6 @@ internal fun Schedule(
     }
 }
 
-/** Free time as part of an average day, so far and ahead, with where the rest of the day goes. */
 @Composable
 private fun AverageDays(calculation: ActivityCalculation.FreeTime) {
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -122,7 +134,10 @@ private fun AverageDay(
                 modifier = Modifier.weight(1f),
             )
             Text(
-                text = stringResource(R.string.detail_free_per_day, perDayText(day.first().fraction)),
+                text = stringResource(
+                    R.string.detail_free_per_day,
+                    perDayText(day.first().fraction)
+                ),
                 style = MaterialTheme.typography.titleMedium,
             )
         }
@@ -160,8 +175,6 @@ private fun HourScale() {
     }
 }
 
-/** The activities that fill the rest of the day, with their average time per day so far. */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DayLegend(activities: List<LifeSegment>) {
     FlowRow(
@@ -177,7 +190,10 @@ private fun DayLegend(activities: List<LifeSegment>) {
                         .background(it.color),
                 )
                 Text(
-                    text = stringResource(R.string.detail_segment_per_day, it.label(), perDayText(it.fraction)),
+                    text = stringResource(
+                        R.string.detail_segment_per_day, it.label(),
+                        perDayText(it.fraction)
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 6.dp),
@@ -207,7 +223,6 @@ private fun Fact(
     }
 }
 
-/** The whole life as a bar: the activity's age range in its color, and a marker for today. */
 @Composable
 private fun AgeTimeline(
     calculation: ActivityCalculation.Scheduled,
@@ -259,7 +274,6 @@ private fun AgeTimeline(
     }
 }
 
-/** Centers [content] horizontally at [fraction] of the available width, kept within the bounds. */
 @Composable
 private fun AtFraction(
     fraction: Double,
@@ -280,3 +294,35 @@ private const val HOURS_PER_DAY = 24
 private val MARKER_RADIUS = 5.dp
 private val MARKER_RING_RADIUS = 8.dp
 
+
+@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
+)
+@Composable
+private fun ActivitySchedulePreview() {
+    TimeOfLifeTheme {
+        val breakdown = GetLifeTimeBreakdownUseCase(
+            StudyBasedLifespanEstimator(StaticBaselineLifeExpectancyProvider),
+            LifeTimeCalculator(),
+        )(UserProfile("Chris", Sex.MALE, LocalDate(1990, 5, 17)), LocalDate(2026, 11, 4))
+        breakdown.activityDetail(ActivityId("default:WORK"))?.let { Schedule(it) }
+    }
+}
+
+@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
+)
+@Composable
+private fun FreeTimeSchedulePreview() {
+    TimeOfLifeTheme {
+        val breakdown = GetLifeTimeBreakdownUseCase(
+            StudyBasedLifespanEstimator(StaticBaselineLifeExpectancyProvider),
+            LifeTimeCalculator(),
+        )(UserProfile("Chris", Sex.MALE, LocalDate(1990, 5, 17)), LocalDate(2026, 11, 4))
+        breakdown.activityDetail(null)?.let { Schedule(it) }
+    }
+}

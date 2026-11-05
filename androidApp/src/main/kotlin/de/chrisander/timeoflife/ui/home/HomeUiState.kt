@@ -1,22 +1,21 @@
 package de.chrisander.timeoflife.ui.home
 
+import de.chrisander.timeoflife.domain.model.LifeProgress
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.ActivityId
-import de.chrisander.timeoflife.widget.domain.model.LifeProgress
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
 import kotlinx.datetime.LocalDate
 
 data class HomeUiState(
     val name: String = "",
     val timeOfDay: TimeOfDay = TimeOfDay.MORNING,
-    val life: LifeOverview? = null,
+    val life: LifeOverview,
 )
 
 enum class TimeOfDay {
     MORNING,
     AFTERNOON,
     EVENING,
-    NIGHT,
-    ;
+    NIGHT;
 
     companion object {
         fun of(hour: Int): TimeOfDay = when (hour) {
@@ -33,10 +32,6 @@ enum class TimeOfDay {
     }
 }
 
-/**
- * @property progress the lived share of life, drawn as the life clock.
- * @property activities every activity plus free time, by their time so far, largest first.
- */
 data class LifeOverview(
     val progress: LifeProgress,
     val yearsLived: Double,
@@ -47,7 +42,6 @@ data class LifeOverview(
     val activities: List<ActivityOverview>,
 )
 
-/** @property segment the activity or free time; its fraction is its share of the life lived so far. */
 data class ActivityOverview(
     val segment: LifeSegment,
     val yearsSpent: Double,

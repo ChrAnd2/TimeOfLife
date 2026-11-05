@@ -1,11 +1,11 @@
 package de.chrisander.timeoflife.widget
 
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.Activity.DefaultActivity
 import de.chrisander.timeoflife.domain.model.activity.DefaultActivityType
 import de.chrisander.timeoflife.domain.model.lifespan.Lifespan
 import de.chrisander.timeoflife.domain.model.lifetime.ActivityTime
 import de.chrisander.timeoflife.domain.model.lifetime.LifeTimeBreakdown
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
 import de.chrisander.timeoflife.widget.mapper.toLifeProgress
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test

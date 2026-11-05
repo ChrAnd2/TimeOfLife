@@ -37,9 +37,16 @@ import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
 import de.chrisander.timeoflife.domain.usecase.LifeTimeCalculator
 import de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimator
-import de.chrisander.timeoflife.ui.activity.description
-import de.chrisander.timeoflife.ui.activity.formatPercent
+import de.chrisander.timeoflife.ui.components.Clock
 import de.chrisander.timeoflife.ui.components.TimeOfLifeLogo
+import de.chrisander.timeoflife.ui.formatter.color
+import de.chrisander.timeoflife.ui.formatter.description
+import de.chrisander.timeoflife.ui.formatter.formatDate
+import de.chrisander.timeoflife.ui.formatter.formatPercent
+import de.chrisander.timeoflife.ui.formatter.formatYears
+import de.chrisander.timeoflife.ui.formatter.label
+import de.chrisander.timeoflife.ui.formatter.yearsText
+import de.chrisander.timeoflife.ui.home.mapper.toLifeOverview
 import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
 import de.chrisander.timeoflife.ui.theme.card
 import kotlinx.datetime.LocalDate
@@ -50,20 +57,22 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    HomeContent(uiState = uiState, onActivityClick = viewModel::onActivityClick)
+    HomeContent(
+        uiState = uiState,
+        onActivityClick = viewModel::onActivityClick
+    )
 }
 
 @Composable
 private fun HomeContent(
-    uiState: HomeUiState,
+    uiState: HomeUiState?,
     onActivityClick: (ActivityId?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(modifier = modifier) { innerPadding ->
-        val life = uiState.life
-        if (life == null) {
+        if (uiState == null) {
             Box(
-                Modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
                 contentAlignment = Alignment.Center,
@@ -81,20 +90,26 @@ private fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             TimeOfLifeLogo(height = 28.dp)
+            val greeting = when (uiState.timeOfDay) {
+                TimeOfDay.MORNING -> R.string.home_greeting_morning
+                TimeOfDay.AFTERNOON -> R.string.home_greeting_afternoon
+                TimeOfDay.EVENING -> R.string.home_greeting_evening
+                TimeOfDay.NIGHT -> R.string.home_greeting_night
+            }
             Text(
-                text = stringResource(uiState.timeOfDay.greeting, uiState.name),
+                text = stringResource(greeting, uiState.name),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(top = 8.dp),
             )
-            LifeClock(
-                progress = life.progress,
+            Clock(
+                progress = uiState.life.progress,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp)
                     .widthIn(max = 200.dp)
                     .fillMaxWidth(),
             )
-            Lifespan(life, Modifier.fillMaxWidth())
+            Lifespan(uiState.life, Modifier.fillMaxWidth())
             Column(modifier = Modifier.padding(top = 16.dp)) {
                 Text(
                     text = stringResource(R.string.home_activities_title),
@@ -107,32 +122,28 @@ private fun HomeContent(
                 )
             }
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                life.activities.forEach { ActivityRow(it, onClick = { onActivityClick(it.activityId) }) }
+                uiState.life.activities.forEach {
+                    ActivityRow(
+                        item = it,
+                        onClick = { onActivityClick(it.activityId) }
+                    )
+                }
             }
         }
     }
 }
 
-private val TimeOfDay.greeting: Int
-    get() = when (this) {
-        TimeOfDay.MORNING -> R.string.home_greeting_morning
-        TimeOfDay.AFTERNOON -> R.string.home_greeting_afternoon
-        TimeOfDay.EVENING -> R.string.home_greeting_evening
-        TimeOfDay.NIGHT -> R.string.home_greeting_night
-    }
-
-/** The expected life span as the screen's headline number. */
 @Composable
 private fun Lifespan(
     life: LifeOverview,
     modifier: Modifier = Modifier,
 ) {
-    val dim = MaterialTheme.colorScheme.onSurfaceVariant
+    val color = MaterialTheme.colorScheme.onSurfaceVariant
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = stringResource(R.string.home_expected_label),
             style = MaterialTheme.typography.titleMedium,
-            color = dim,
+            color = color,
         )
         Row(
             verticalAlignment = Alignment.Bottom,
@@ -163,9 +174,12 @@ private fun Lifespan(
         }
         if (life.yearsBeyondLifespan > 0) {
             Text(
-                text = stringResource(R.string.home_bonus_body, formatYears(life.yearsBeyondLifespan)),
+                text = stringResource(
+                    R.string.home_bonus_body,
+                    formatYears(life.yearsBeyondLifespan)
+                ),
                 style = MaterialTheme.typography.bodyMedium,
-                color = dim,
+                color = color,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 12.dp),
             )
@@ -173,14 +187,13 @@ private fun Lifespan(
     }
 }
 
-/** One tile per activity: name and schedule, and how much of the life so far it took. */
 @Composable
 private fun ActivityRow(
     item: ActivityOverview,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val dim = MaterialTheme.colorScheme.onSurfaceVariant
+    val color = MaterialTheme.colorScheme.onSurfaceVariant
     Surface(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
@@ -192,10 +205,10 @@ private fun ActivityRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                Modifier
+                modifier = Modifier
                     .size(12.dp)
                     .clip(CircleShape)
-                    .background(item.segment.color),
+                    .background(item.segment.color)
             )
             Column(
                 modifier = Modifier
@@ -206,25 +219,24 @@ private fun ActivityRow(
                 Text(
                     text = item.segment.description(),
                     style = MaterialTheme.typography.bodySmall,
-                    color = dim,
+                    color = color,
                 )
             }
+            val tabularFigures = "tnum"
             Column(horizontalAlignment = Alignment.End) {
                 Text(
                     text = yearsText(item.yearsSpent),
-                    style = MaterialTheme.typography.titleMedium.copy(fontFeatureSettings = TABULAR_FIGURES),
+                    style = MaterialTheme.typography.titleMedium.copy(fontFeatureSettings = tabularFigures),
                 )
                 Text(
                     text = stringResource(R.string.home_activity_share, formatPercent(item.segment.fraction)),
-                    style = MaterialTheme.typography.bodySmall.copy(fontFeatureSettings = TABULAR_FIGURES),
-                    color = dim,
+                    style = MaterialTheme.typography.bodySmall.copy(fontFeatureSettings = tabularFigures),
+                    color = color,
                 )
             }
         }
     }
 }
-
-private const val TABULAR_FIGURES = "tnum"
 
 @Preview(showBackground = true, heightDp = 1400)
 @Preview(

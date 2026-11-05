@@ -1,9 +1,9 @@
 package de.chrisander.timeoflife.widget
 
+import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.Activity
 import de.chrisander.timeoflife.domain.model.activity.DefaultActivityType
 import de.chrisander.timeoflife.ui.theme.BrandPalette
-import de.chrisander.timeoflife.widget.domain.model.LifeSegment
 
 internal object WidgetColors {
     const val FACE = BrandPalette.PANEL.toInt()

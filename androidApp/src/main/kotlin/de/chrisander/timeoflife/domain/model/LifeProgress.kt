@@ -1,4 +1,4 @@
-package de.chrisander.timeoflife.widget.domain.model
+package de.chrisander.timeoflife.domain.model
 
 /**
  * What the life widgets show, independent of how they draw it. All fractions are of the whole life, so 1.0 is the
