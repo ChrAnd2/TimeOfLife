@@ -8,3 +8,4 @@
 - Added pipeline
 - Added home screen
 - Added activity details
+- Added health factors to onboarding

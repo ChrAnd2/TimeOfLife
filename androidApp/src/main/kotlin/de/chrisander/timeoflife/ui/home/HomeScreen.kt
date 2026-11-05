@@ -238,10 +238,9 @@ private fun ActivityRow(
     }
 }
 
-@Preview(showBackground = true, heightDp = 1400)
+@Preview(showBackground = true)
 @Preview(
     showBackground = true,
-    heightDp = 1400,
     uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable

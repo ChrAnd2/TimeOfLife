@@ -98,9 +98,37 @@ palette, font). Colors come from `ui/theme/BrandPalette.kt`, used by both the Co
 `WidgetColors`; don't hardcode new colors elsewhere. The launcher icons, logo mark, widget picker
 previews and iOS app icons hardcode the palette too, so update them when a brand color changes.
 
+## Code style
+
+- Models (domain models, UI states, events, enums, `model/` types) contain only data. Put each one
+  in its own file, with no logic and no composables. Validation, parsing and event handling belong
+  in the ViewModel (or a use case), and composables belong in UI files.
+- Use extension functions only when they really help, like a small reusable helper on a type you
+  don't own. Don't use them to hide logic such as event handling or validation. Write a plain
+  function with explicit parameters instead (e.g. `handleHealthSettingsEvent(health, event)` rather
+  than
+  `health.apply(event)`).
+- Don't write mapping extensions like `private val Sex.labelRes: Int get() = when (this) { … }`.
+  Write the `when` right where the value is needed, e.g.
+  `label = { stringResource(when (it) { Sex.MALE -> R.string.sex_male … }) }`. Only extract it into
+  a plain function when the same mapping is needed in several places.
+- Every screen, sub-screen and reusable component (e.g. `HealthSettings`, `FactorInfoButton`) needs
+  a
+  `@Preview`. Small private sub-composables don't need one.
+- A file is named after its main public/internal declaration (class, composable, enum), e.g.
+  `FactorInfoButton.kt` contains `fun FactorInfoButton(...)`. Rename the file when you rename that
+  declaration and vice versa.
+- Generic, reusable UI building blocks (selectors, sliders, input fields, …) live in
+  `ui/components/` and are prefixed with `ToL`, e.g. `ToLLevelSlider`, `ToLSingleChoiceSelector`,
+  `ToLNumberField`. Use them instead of building the same Material component again in a screen.
+  Composables tied to one feature (e.g. `FactorInfoButton`) stay in that feature's package.
+- Previews never get a fixed size: use `@Preview(showBackground = true)` without `heightDp` or
+  `widthDp`.
+
 ## Comments
 
 TODO comments must name their ticket, like `// TODO(ToL-123): ...`; detekt rejects any other TODO.
 
-Only add comments to functions where really necessary and have documentation benefints. Never add
-comments just to explain what was generated.
+Only write comments and KDoc when they are really helpful, e.g. to explain a non-obvious decision,
+rule or source. Never add comments or KDoc that just restate what the code does or describe what was
+generated.
