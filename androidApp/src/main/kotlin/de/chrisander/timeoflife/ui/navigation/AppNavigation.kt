@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import de.chrisander.timeoflife.ui.activity.ActivityDetailScreen
 import de.chrisander.timeoflife.ui.home.HomeScreen
 import de.chrisander.timeoflife.ui.onboarding.OnboardingScreen
 import org.koin.compose.koinInject
@@ -26,6 +27,7 @@ fun AppNavigation(
         entryProvider = entryProvider {
             entry<OnboardingRoute> { OnboardingScreen() }
             entry<HomeRoute> { HomeScreen() }
+            entry<ActivityDetailRoute> { ActivityDetailScreen(it) }
         },
     )
 }
