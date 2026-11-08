@@ -9,6 +9,63 @@
     <string name="onboarding_birth_date_placeholder">Select your birth date</string>
     <string name="onboarding_submit">Get started</string>
     <string name="onboarding_save_error">Couldn\'t save your info. Please try again.</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_health_title">Your health</string>
+    <string name="onboarding_health_subtitle">The more you share, the more accurate your life span estimate gets. Everything stays on your device.</string>
+    <string name="health_settings_country_label">Country</string>
+    <string name="health_settings_country_hint">Where you live sets your baseline life expectancy.</string>
+    <string name="health_settings_country_global">Global average</string>
+    <string name="health_settings_body_label">Height and weight</string>
+    <string name="health_settings_body_hint">Optional. Together they give your BMI.</string>
+    <string name="health_settings_height_label">Height (cm)</string>
+    <string name="health_settings_weight_label">Weight (kg)</string>
+    <string name="health_settings_body_error">Enter both a realistic height and weight.</string>
+    <string name="health_settings_bmi">Your BMI: %1$s</string>
+    <string name="health_settings_smoking_label">Smoking</string>
+    <string name="health_settings_quit_age_label">Age when you quit</string>
+    <string name="health_settings_alcohol_label">Alcohol</string>
+    <string name="health_settings_alcohol_hint">One drink is a small beer, a glass of wine or a shot.</string>
+    <string name="health_settings_activity_label">Exercise</string>
+    <string name="health_settings_activity_hint">Brisk walking or anything more active, in your free time.</string>
+    <string name="health_settings_conditions_label">Diagnosed conditions</string>
+    <string name="health_settings_conditions_hint">Select all that apply.</string>
+
+    <string name="level_none">None</string>
+    <string name="level_low">Low</string>
+    <string name="level_moderate">Moderate</string>
+    <string name="level_high">High</string>
+    <string name="level_very_high">Very high</string>
+
+    <string name="info_content_description">About %1$s</string>
+    <string name="info_close">Got it</string>
+    <string name="info_source">Source:</string>
+    <string name="info_sources">Sources:</string>
+    <string name="info_country">Your estimate starts from the average life expectancy at birth for your sex in your country. So far only Germany has its own figures, every other country uses the global average.</string>
+    <string name="info_body">Your BMI is your weight divided by your height squared. People with a BMI of about 18.5 to 25 live longest. A BMI of 30 to 35 shortens life by about 2 to 4 years, 40 or more by 8 to 10 years.</string>
+    <string name="info_smoking">People who keep smoking live about 10 years shorter than people who never smoked. Quitting pays off at any age: quitting before 35 regains almost all of it, quitting at 40, 50 or 60 still about 9, 6 or 3 years.</string>
+    <string name="info_alcohol">One drink is about 10 g of alcohol: a small beer (0.33 l), a glass of wine (0.1 l) or a shot (4 cl).\n\n• Low: up to 10 drinks a week, no effect\n• Moderate: 10 to 20 drinks, about half a year less\n• High: 20 to 35 drinks, 1 to 2 years less\n• Very high: more than 35 drinks, 4 to 5 years less</string>
+    <string name="info_exercise">Counts brisk walking or anything more active you do in your free time, not at work.\n\n• Low: up to 2.5 h a week, about 1.8 years more\n• Moderate: 2.5 to 7.5 h, the WHO recommendation, about 3.4 years more\n• High: more than 7.5 h, about 4.5 years more</string>
+    <string name="info_conditions">Diabetes, a heart attack and a stroke each raise the risk of dying by a similar amount, and their effects add up. Any two of them cost about 12 years, all three about 15 years. One condition is estimated at about 6 years.</string>
+
+    <string name="smoking_never">Never</string>
+    <string name="smoking_former">Former</string>
+    <string name="smoking_current">Current</string>
+
+    <string name="alcohol_none">No alcohol</string>
+    <string name="alcohol_low">Up to 10 drinks a week</string>
+    <string name="alcohol_moderate">10 to 20 drinks a week</string>
+    <string name="alcohol_high">20 to 35 drinks a week</string>
+    <string name="alcohol_very_high">More than 35 drinks a week</string>
+
+    <string name="activity_level_none">No exercise in your free time</string>
+    <string name="activity_level_low">Up to 2.5 h a week</string>
+    <string name="activity_level_moderate">2.5 to 7.5 h a week</string>
+    <string name="activity_level_high">More than 7.5 h a week</string>
+
+    <string name="condition_diabetes">Diabetes</string>
+    <string name="condition_heart_attack">Heart attack</string>
+    <string name="condition_stroke">Stroke</string>
 
     <string name="sex_male">Male</string>
     <string name="sex_female">Female</string>
