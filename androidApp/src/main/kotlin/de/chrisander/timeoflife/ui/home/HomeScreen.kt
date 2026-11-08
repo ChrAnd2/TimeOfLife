@@ -15,6 +15,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -24,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -59,7 +62,8 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     HomeContent(
         uiState = uiState,
-        onActivityClick = viewModel::onActivityClick
+        onActivityClick = viewModel::onActivityClick,
+        onProfileClick = viewModel::onProfileClick,
     )
 }
 
@@ -67,6 +71,7 @@ fun HomeScreen(
 private fun HomeContent(
     uiState: HomeUiState?,
     onActivityClick: (ActivityId?) -> Unit,
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(modifier = modifier) { innerPadding ->
@@ -89,7 +94,15 @@ private fun HomeContent(
                 .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            TimeOfLifeLogo(height = 28.dp)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                TimeOfLifeLogo(height = 28.dp, modifier = Modifier.weight(1f))
+                IconButton(onClick = onProfileClick) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_person),
+                        contentDescription = stringResource(R.string.home_profile),
+                    )
+                }
+            }
             val greeting = when (uiState.timeOfDay) {
                 TimeOfDay.MORNING -> R.string.home_greeting_morning
                 TimeOfDay.AFTERNOON -> R.string.home_greeting_afternoon
@@ -255,6 +268,7 @@ private fun HomeContentPreview() {
         HomeContent(
             uiState = HomeUiState(name = "Chris", timeOfDay = TimeOfDay.EVENING, life = life),
             onActivityClick = {},
+            onProfileClick = {},
         )
     }
 }

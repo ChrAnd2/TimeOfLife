@@ -87,6 +87,11 @@ study source for every number.** Keep it in sync when you change a factor or the
 - `MainViewModel` picks the start route (`OnboardingRoute` vs `HomeRoute`) from
   `UserProfileRepository.isOnboardingCompleted`.
 - Screens follow `XScreen` / `XViewModel` / `XUiState` (/ `XEvent`) per feature folder under `ui/`.
+- The profile screen (`ui/profile/`) lists one row per `ProfileSetting` entry. To add a setting, add
+  an
+  entry there and handle it in `ProfileScreen` and `ProfileViewModel.onSettingClick`.
+- `HealthSettingsHandler` and `PersonalSettings` are shared by onboarding and profile editing, so a
+  change to the onboarding form reaches both.
 - `KoinModulesTest` verifies the whole Koin graph. Add any new constructor dependency to a module or
   this test fails. Inject `Clock` rather than calling `Clock.System` directly so ViewModels stay
   testable.
@@ -129,6 +134,5 @@ previews and iOS app icons hardcode the palette too, so update them when a brand
 
 TODO comments must name their ticket, like `// TODO(ToL-123): ...`; detekt rejects any other TODO.
 
-Only write comments and KDoc when they are really helpful, e.g. to explain a non-obvious decision,
-rule or source. Never add comments or KDoc that just restate what the code does or describe what was
-generated.
+Never generate or add comments or KDoc, not even to explain a decision. Make the code explain itself
+through names instead. Leave existing comments as they are unless asked to change them.

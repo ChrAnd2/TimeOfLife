@@ -7,8 +7,12 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import de.chrisander.timeoflife.ui.activity.ActivityDetailScreen
+import de.chrisander.timeoflife.ui.customactivities.CustomActivitiesScreen
+import de.chrisander.timeoflife.ui.customactivityeditor.CustomActivityEditorScreen
 import de.chrisander.timeoflife.ui.home.HomeScreen
 import de.chrisander.timeoflife.ui.onboarding.OnboardingScreen
+import de.chrisander.timeoflife.ui.profile.ProfileScreen
+import de.chrisander.timeoflife.ui.profiledata.ProfileDataScreen
 import org.koin.compose.koinInject
 
 @Composable
@@ -28,6 +32,10 @@ fun AppNavigation(
             entry<OnboardingRoute> { OnboardingScreen() }
             entry<HomeRoute> { HomeScreen() }
             entry<ActivityDetailRoute> { ActivityDetailScreen(it) }
+            entry<ProfileRoute> { ProfileScreen() }
+            entry<ProfileDataRoute> { ProfileDataScreen() }
+            entry<CustomActivitiesRoute> { CustomActivitiesScreen() }
+            entry<CustomActivityEditorRoute> { CustomActivityEditorScreen(it) }
         },
     )
 }
