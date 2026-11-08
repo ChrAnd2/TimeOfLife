@@ -61,7 +61,7 @@ jobs:
         run: ./gradlew :androidApp:assembleDebug
 
       - name: Test
-        run: ./gradlew :sharedLogic:testAndroidHostTest :androidApp:testDebugUnitTest
+        run: ./gradlew :sharedLogic:testAndroidHostTest :sharedUI:testAndroidHostTest :androidApp:testDebugUnitTest
 
       - name: Coverage
         run: |

@@ -6,8 +6,37 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D1A0000000000000000000B4 /* TimeOfLifeWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D1A0000000000000000000A1 /* TimeOfLifeWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D1A0000000000000000000B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ECEE5D9F573AF5B7567DEAF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1A0000000000000000000A4;
+			remoteInfo = TimeOfLifeWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D1A0000000000000000000B3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D1A0000000000000000000B4 /* TimeOfLifeWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3A71BF3E84E6ADD224057585 /* TimeOfLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeOfLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1A0000000000000000000A1 /* TimeOfLifeWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeOfLifeWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -15,8 +44,17 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				iosApp.entitlements,
 			);
 			target = A599B62C7AF798995807B3A3 /* iosApp */;
+		};
+		D1A0000000000000000000A3 /* Exceptions for "TimeOfLifeWidget" folder in "TimeOfLifeWidget" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				TimeOfLifeWidget.entitlements,
+			);
+			target = D1A0000000000000000000A4 /* TimeOfLifeWidget */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -34,10 +72,25 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		D1A0000000000000000000A2 /* TimeOfLifeWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D1A0000000000000000000A3 /* Exceptions for "TimeOfLifeWidget" folder in "TimeOfLifeWidget" target */,
+			);
+			path = TimeOfLifeWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6E9D1ED7E50E8059FD82FAD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1A0000000000000000000A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -52,6 +105,7 @@
 			children = (
 				C4797472C8931EED2E83B8D3 /* Configuration */,
 				43E85258EE216C45FCCBCF50 /* iosApp */,
+				D1A0000000000000000000A2 /* TimeOfLifeWidget */,
 				478D67B01433EA191F0A2E6C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				3A71BF3E84E6ADD224057585 /* TimeOfLife.app */,
+				D1A0000000000000000000A1 /* TimeOfLifeWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,10 +130,12 @@
 				AE978F901EDB505531A82DBD /* Sources */,
 				6E9D1ED7E50E8059FD82FAD4 /* Frameworks */,
 				51546819F1B9B46DB89550E4 /* Resources */,
+				D1A0000000000000000000B3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D1A0000000000000000000B6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				43E85258EE216C45FCCBCF50 /* iosApp */,
@@ -89,6 +146,29 @@
 			productName = iosApp;
 			productReference = 3A71BF3E84E6ADD224057585 /* TimeOfLife.app */;
 			productType = "com.apple.product-type.application";
+		};
+		D1A0000000000000000000A4 /* TimeOfLifeWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1A0000000000000000000A9 /* Build configuration list for PBXNativeTarget "TimeOfLifeWidget" */;
+			buildPhases = (
+				D1A0000000000000000000A5 /* Compile Kotlin Framework */,
+				D1A0000000000000000000A6 /* Sources */,
+				D1A0000000000000000000A7 /* Frameworks */,
+				D1A0000000000000000000A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D1A0000000000000000000A2 /* TimeOfLifeWidget */,
+			);
+			name = TimeOfLifeWidget;
+			packageProductDependencies = (
+			);
+			productName = TimeOfLifeWidget;
+			productReference = D1A0000000000000000000A1 /* TimeOfLifeWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -101,6 +181,9 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					A599B62C7AF798995807B3A3 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					D1A0000000000000000000A4 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -120,6 +203,7 @@
 			projectRoot = "";
 			targets = (
 				A599B62C7AF798995807B3A3 /* iosApp */,
+				D1A0000000000000000000A4 /* TimeOfLifeWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -132,10 +216,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1A0000000000000000000A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		DC5957D36C8541C3E8825E78 /* Compile Kotlin Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Compile Kotlin Framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :sharedUI:embedAndSignAppleFrameworkForXcode\n";
+		};
+		D1A0000000000000000000A5 /* Compile Kotlin Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -164,7 +274,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1A0000000000000000000A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D1A0000000000000000000B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1A0000000000000000000A4 /* TimeOfLifeWidget */;
+			targetProxy = D1A0000000000000000000B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A8C4EEED48B4D9F5F320644B /* Debug */ = {
@@ -296,6 +421,7 @@
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
@@ -324,6 +450,7 @@
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
@@ -340,6 +467,56 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D1A0000000000000000000B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = TimeOfLifeWidget/TimeOfLifeWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeOfLifeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimeOfLife;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.chrisander.timeoflife.TimeOfLife$(TEAM_ID).widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D1A0000000000000000000B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = TimeOfLifeWidget/TimeOfLifeWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeOfLifeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimeOfLife;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.chrisander.timeoflife.TimeOfLife$(TEAM_ID).widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -363,6 +540,15 @@
 			buildConfigurations = (
 				97533B9744D0D863CDD682D0 /* Debug */,
 				64C871CB140482B9CEAE51B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1A0000000000000000000A9 /* Build configuration list for PBXNativeTarget "TimeOfLifeWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1A0000000000000000000B1 /* Debug */,
+				D1A0000000000000000000B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

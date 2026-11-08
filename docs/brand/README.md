@@ -61,6 +61,7 @@ Licensed under the [SIL Open Font License](OFL.txt).
 
 ## Changing the brand
 
-When you change a color, change it in `ui/theme/BrandPalette.kt`, in the table above and in the icon
+When you change a color, change it in `sharedLogic/.../brand/BrandPalette.kt`, in
+`iosApp/TimeOfLifeWidget/Brand.swift`, in the table above and in the icon
 and logo files that use it: the launcher icon and logo mark drawables, the widget picker previews,
 the iOS app icons and the SVGs in this folder.

@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import de.chrisander.timeoflife.ui.TimeOfLifeApp
-import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,9 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            TimeOfLifeTheme {
-                TimeOfLifeApp()
-            }
+            App()
         }
     }
 }

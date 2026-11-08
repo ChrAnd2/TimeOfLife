@@ -16,13 +16,14 @@ the remaining time down by recurring activities (sleep, work, …). Package root
 ./gradlew :sharedLogic:allTests                           # all sharedLogic tests (commonTest runs on every target)
 ./gradlew :sharedLogic:testAndroidHostTest                # sharedLogic commonTest + androidHostTest on the JVM (fastest)
 ./gradlew :sharedLogic:iosSimulatorArm64Test              # sharedLogic tests on iOS simulator (macOS only)
-./gradlew :androidApp:testDebugUnitTest                   # Android app unit tests (ViewModels, Koin graph check)
+./gradlew :sharedUI:testAndroidHostTest                   # shared UI tests on the JVM (ViewModels, mappers)
+./gradlew :androidApp:testDebugUnitTest                   # Android app unit tests (widgets, Koin graph check)
 ./gradlew detekt                                          # lint all modules and source sets (config/detekt/detekt.yml)
 ./gradlew koverHtmlReport koverLog                        # merged JVM test coverage, report in build/reports/kover/
 
 # single test class / method
 ./gradlew :sharedLogic:testAndroidHostTest --tests "de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimatorTest"
-./gradlew :androidApp:testDebugUnitTest --tests "*OnboardingViewModelTest.someMethod"
+./gradlew :sharedUI:testAndroidHostTest --tests "*OnboardingViewModelTest.someMethod"
 ```
 
 CI (`.github/workflows/ci.yml`) runs on pull requests into `develop`. It first fails if
@@ -31,16 +32,24 @@ own ticket is still in the code, then runs detekt, the debug build and the JVM t
 coverage. Keep `./gradlew detekt` clean. CI runs on Linux only: never add macOS runners, so iOS
 tests run locally only.
 
-iOS app: open `iosApp/` in Xcode. It imports the static `SharedLogic` framework.
+iOS app: open `iosApp/` in Xcode and set `TEAM_ID` in `iosApp/Configuration/Config.xcconfig`.
+The app target links the static `SharedUI` framework, the `TimeOfLifeWidget` extension target links
+the static `SharedLogic` framework. Never link both into one binary.
 
 ## Module layout
 
 - **sharedLogic**: all business logic, shared by both platforms: data, domain and Koin modules. No
   UI.
-- **androidApp**: the actual Android UI, written in plain Jetpack Compose in this module. It does
-  **not** use `sharedUI`.
-- **sharedUI** and **iosApp**: still the KMP wizard template (Greeting/`App()` placeholder). The
-  real UI so far exists only in `androidApp`.
+- **sharedUI**: the whole app UI in Compose Multiplatform, shared by Android and iOS: screens,
+  ViewModels, navigation, theme and `uiModule`. Resources live in `src/commonMain/composeResources`
+  and are accessed through `de.chrisander.timeoflife.resources.Res`. Platform APIs (number/date
+  formatting, country names) go through `expect`/`actual` functions.
+- **androidApp**: the Android shell (`MainActivity` shows `App()`) plus the Glance widgets and their
+  settings.
+- **iosApp**: the iOS shell (`ContentView` shows `MainViewController()`) plus the WidgetKit
+  extension in `TimeOfLifeWidget/`, written in SwiftUI. The app writes the profile to the App Group
+  `group.de.chrisander.timeoflife` (`WidgetProfileStore` in sharedLogic `iosMain`) and reloads the
+  widget timelines; the widget reads it back through `WidgetProfileStore.loadLifeProgress()`.
 
 ## Architecture
 
@@ -75,10 +84,11 @@ Each health factor (smoking, alcohol, activity, BMI, conditions) lives in its ow
 documents the method and the study source for every number.** Keep it in sync when you change a
 factor or the baseline table.
 
-### androidApp
+### sharedUI
 
-- `TimeOfLifeApplication` starts Koin with `appModules = sharedModules + appModule`
-  (`di/AppModule.kt`). `appModule` provides `Clock`, the `Navigator` singleton and the ViewModels.
+- `sharedUiModules = sharedModules + uiModule` (`di/UiModule.kt`). `uiModule` provides the
+  `Navigator` singleton and the ViewModels. Android starts Koin in `TimeOfLifeApplication` with
+  `appModules = sharedUiModules + appModule`, iOS in `initKoin()` (`MainViewController.kt`).
 - Navigation uses **Navigation 3**. `ui/navigation/Navigator` is a Koin singleton that owns the back
   stack (`SnapshotStateList<NavKey>`), so ViewModels navigate directly without UI callbacks.
   `AppNavigation` renders it with `NavDisplay`. Routes are `@Serializable` `NavKey` objects in
@@ -90,16 +100,19 @@ factor or the baseline table.
   an entry there and handle it in `ProfileScreen` and `ProfileViewModel.onSettingClick`.
 - `HealthSettingsHandler` and `PersonalSettings` are shared by onboarding and profile editing, so a
   change to the onboarding form reaches both.
-- `KoinModulesTest` verifies the whole Koin graph. Add any new constructor dependency to a module or
+- `KoinModulesTest` (androidApp) verifies the whole Koin graph. Add any new constructor dependency
+  to a module or
   this test fails. Inject `Clock` rather than calling `Clock.System` directly so ViewModels stay
   testable.
 
 ### Brand
 
 The app name is always written `TimeOfLife`. `docs/brand/README.md` is the brand guide (logo,
-palette, font). Colors come from `ui/theme/BrandPalette.kt`, used by both the Compose theme and
-`WidgetColors`; don't hardcode new colors elsewhere. The launcher icons, logo mark, widget picker
-previews and iOS app icons hardcode the palette too, so update them when a brand color changes.
+palette, font). Colors come from `brand/BrandPalette.kt` in sharedLogic, and activity colors from
+`brand/SegmentColors.kt`, used by the Compose theme and both platforms' widgets; don't hardcode new
+colors elsewhere. The launcher icons, logo mark, widget picker previews, iOS app icons and
+`iosApp/TimeOfLifeWidget/Brand.swift` hardcode the palette too, so update them when a brand color
+changes.
 
 ## Code style
 

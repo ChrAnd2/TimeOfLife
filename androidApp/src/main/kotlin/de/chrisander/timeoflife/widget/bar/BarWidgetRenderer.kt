@@ -10,7 +10,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Typeface
-import de.chrisander.timeoflife.domain.model.LifeProgress
+import de.chrisander.timeoflife.domain.model.progress.LifeProgress
 import de.chrisander.timeoflife.widget.MIN_LEGEND_ROW_DP
 import de.chrisander.timeoflife.widget.WidgetColors
 import de.chrisander.timeoflife.widget.drawPanel

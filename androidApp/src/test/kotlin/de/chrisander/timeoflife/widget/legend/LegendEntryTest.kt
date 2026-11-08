@@ -1,9 +1,9 @@
 package de.chrisander.timeoflife.widget.legend
 
-import de.chrisander.timeoflife.domain.model.LifeProgress
-import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.Activity.DefaultActivity
 import de.chrisander.timeoflife.domain.model.activity.DefaultActivityType
+import de.chrisander.timeoflife.domain.model.progress.LifeProgress
+import de.chrisander.timeoflife.domain.model.progress.LifeSegment
 import de.chrisander.timeoflife.widget.WidgetColors
 import kotlin.test.Test
 import kotlin.test.assertEquals

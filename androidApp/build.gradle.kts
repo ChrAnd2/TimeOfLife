@@ -13,7 +13,7 @@ kotlin {
     }
 }
 dependencies {
-    implementation(project(":sharedLogic"))
+    implementation(project(":sharedUI"))
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
@@ -22,8 +22,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodelCompose)
     implementation(libs.androidx.lifecycle.runtimeCompose)
-    implementation(libs.androidx.lifecycle.viewmodelNavigation3)
-    implementation(libs.androidx.navigation3.ui)
     implementation(libs.compose.runtime)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)

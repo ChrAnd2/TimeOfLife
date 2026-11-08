@@ -2,10 +2,10 @@ package de.chrisander.timeoflife.widget.legend
 
 import android.content.Context
 import de.chrisander.timeoflife.R
-import de.chrisander.timeoflife.domain.model.LifeProgress
-import de.chrisander.timeoflife.domain.model.LifeSegment
 import de.chrisander.timeoflife.domain.model.activity.Activity
 import de.chrisander.timeoflife.domain.model.activity.DefaultActivityType
+import de.chrisander.timeoflife.domain.model.progress.LifeProgress
+import de.chrisander.timeoflife.domain.model.progress.LifeSegment
 import de.chrisander.timeoflife.widget.WidgetColors
 import kotlin.math.roundToInt
 

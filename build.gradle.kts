@@ -35,6 +35,7 @@ subprojects {
 
 dependencies {
     kover(project(":sharedLogic"))
+    kover(project(":sharedUI"))
     kover(project(":androidApp"))
 }
 
@@ -44,7 +45,13 @@ kover {
             excludes {
                 // Compose UI isn't covered by unit tests, so it would only dilute the number.
                 annotatedBy("androidx.compose.runtime.Composable", "androidx.compose.ui.tooling.preview.Preview")
-                classes("*.ComposableSingletons*", "*.BuildConfig", "*.R", "*.R$*")
+                classes(
+                    "*.ComposableSingletons*",
+                    "*.BuildConfig",
+                    "*.R",
+                    "*.R$*",
+                    "de.chrisander.timeoflife.resources.*"
+                )
             }
         }
         total.log.format = "Total: <value> %"

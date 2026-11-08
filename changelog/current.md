@@ -11,3 +11,4 @@
 - Added health factors to onboarding
 - Added profile with personal data and custom activities
 - Updated README and added technical documentation
+- Added iOS app and widgets

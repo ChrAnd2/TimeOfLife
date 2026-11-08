@@ -7,7 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import de.chrisander.timeoflife.domain.model.LifeProgress
+import de.chrisander.timeoflife.domain.model.progress.LifeProgress
 import de.chrisander.timeoflife.widget.WidgetColors
 import kotlin.math.cos
 import kotlin.math.sin

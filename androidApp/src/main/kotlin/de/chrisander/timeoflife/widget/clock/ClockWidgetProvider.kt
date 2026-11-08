@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import de.chrisander.timeoflife.R
-import de.chrisander.timeoflife.domain.model.LifeProgress
+import de.chrisander.timeoflife.domain.model.progress.LifeProgress
 import de.chrisander.timeoflife.widget.WidgetProvider
 import de.chrisander.timeoflife.widget.legend.LegendEntry
 import de.chrisander.timeoflife.widget.legend.LegendPosition

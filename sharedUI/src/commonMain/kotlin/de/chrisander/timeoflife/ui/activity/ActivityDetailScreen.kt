@@ -1,0 +1,262 @@
+package de.chrisander.timeoflife.ui.activity
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.AndroidUiModes
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.chrisander.timeoflife.data.datasource.StaticBaselineLifeExpectancyProvider
+import de.chrisander.timeoflife.domain.model.activity.ActivityId
+import de.chrisander.timeoflife.domain.model.profile.Sex
+import de.chrisander.timeoflife.domain.model.profile.UserProfile
+import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
+import de.chrisander.timeoflife.domain.usecase.LifeTimeCalculator
+import de.chrisander.timeoflife.domain.usecase.StudyBasedLifespanEstimator
+import de.chrisander.timeoflife.resources.Res
+import de.chrisander.timeoflife.resources.activity_detail_ahead
+import de.chrisander.timeoflife.resources.activity_detail_back
+import de.chrisander.timeoflife.resources.activity_detail_share_of_lifespan
+import de.chrisander.timeoflife.resources.activity_detail_share_of_lived
+import de.chrisander.timeoflife.resources.activity_detail_share_of_remaining
+import de.chrisander.timeoflife.resources.activity_detail_spent_so_far
+import de.chrisander.timeoflife.resources.activity_detail_whole_life
+import de.chrisander.timeoflife.resources.ic_arrow_back
+import de.chrisander.timeoflife.ui.activity.mapper.activityDetail
+import de.chrisander.timeoflife.ui.formatter.color
+import de.chrisander.timeoflife.ui.formatter.description
+import de.chrisander.timeoflife.ui.formatter.formatPercent
+import de.chrisander.timeoflife.ui.formatter.label
+import de.chrisander.timeoflife.ui.formatter.yearsText
+import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
+import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
+import de.chrisander.timeoflife.ui.theme.card
+import kotlinx.datetime.LocalDate
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
+
+@Composable
+fun ActivityDetailScreen(
+    route: ActivityDetailRoute,
+    viewModel: ActivityDetailViewModel = koinViewModel { parametersOf(route) },
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    ActivityDetailContent(uiState = uiState, onBack = viewModel::onBack)
+}
+
+@Composable
+private fun ActivityDetailContent(
+    uiState: ActivityDetailUiState?,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Scaffold(modifier = modifier) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(start = 8.dp, end = 20.dp, bottom = 24.dp),
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    painter = painterResource(Res.drawable.ic_arrow_back),
+                    contentDescription = stringResource(Res.string.activity_detail_back),
+                )
+            }
+            if (uiState == null) {
+                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                Column(
+                    modifier = Modifier.padding(start = 12.dp, top = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    Header(uiState)
+                    SpentSoFar(uiState, Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp))
+                    AheadAndWholeLife(uiState)
+                    Schedule(uiState, Modifier.padding(top = 16.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Header(state: ActivityDetailUiState) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                Modifier
+                    .size(16.dp)
+                    .clip(CircleShape)
+                    .background(state.segment.color),
+            )
+            Text(
+                text = state.segment.label(),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(start = 12.dp),
+            )
+        }
+        Text(
+            text = state.segment.description(),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+private fun SpentSoFar(
+    state: ActivityDetailUiState,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = stringResource(Res.string.activity_detail_spent_so_far),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            text = yearsText(state.yearsSpent),
+            style = MaterialTheme.typography.displayMedium,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+        )
+        Surface(
+            shape = CircleShape,
+            color = state.segment.color.copy(alpha = PILL_ALPHA),
+            modifier = Modifier.padding(top = 4.dp),
+        ) {
+            Text(
+                text = stringResource(
+                    Res.string.activity_detail_share_of_lived,
+                    formatPercent(state.shareOfLived)
+                ),
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun AheadAndWholeLife(state: ActivityDetailUiState) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        NumberTile(
+            title = stringResource(Res.string.activity_detail_ahead),
+            years = state.yearsAhead,
+            share = stringResource(
+                Res.string.activity_detail_share_of_remaining,
+                formatPercent(state.shareOfRemaining),
+            ),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+        )
+        NumberTile(
+            title = stringResource(Res.string.activity_detail_whole_life),
+            years = state.yearsTotal,
+            share = stringResource(
+                Res.string.activity_detail_share_of_lifespan,
+                formatPercent(state.shareOfLifespan),
+            ),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+        )
+    }
+}
+
+@Composable
+private fun NumberTile(
+    title: String,
+    years: Double,
+    share: String,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.card,
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = yearsText(years),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(top = 4.dp),
+            )
+            Text(
+                text = share,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+private const val PILL_ALPHA = 0.25f
+
+@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    uiMode = AndroidUiModes.UI_MODE_NIGHT_YES,
+)
+@Composable
+private fun ActivityDetailContentPreview() {
+    TimeOfLifeTheme {
+        val getLifeTimeBreakdown = GetLifeTimeBreakdownUseCase(
+            StudyBasedLifespanEstimator(StaticBaselineLifeExpectancyProvider),
+            LifeTimeCalculator(),
+        )
+        val profile = UserProfile("Chris", Sex.MALE, LocalDate(1990, 5, 17))
+        val state = getLifeTimeBreakdown(profile, LocalDate(2026, 11, 4))
+            .activityDetail(ActivityId("default:WORK"))
+        ActivityDetailContent(
+            uiState = state,
+            onBack = {},
+        )
+    }
+}
