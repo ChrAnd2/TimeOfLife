@@ -11,6 +11,7 @@ import de.chrisander.timeoflife.domain.model.profile.LifespanFactors
 import de.chrisander.timeoflife.domain.model.profile.Sex
 import de.chrisander.timeoflife.domain.model.profile.UserProfile
 import de.chrisander.timeoflife.ui.healthsettings.HealthSettingsEvent
+import de.chrisander.timeoflife.ui.healthsettings.HealthSettingsHandler
 import de.chrisander.timeoflife.ui.healthsettings.model.SmokingChoice
 import de.chrisander.timeoflife.ui.navigation.HomeRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
@@ -59,7 +60,8 @@ class OnboardingViewModelTest {
             LocalDateTime(2026, 11, 5, 12, 0).toInstant(TimeZone.currentSystemDefault())
     }
 
-    private fun createViewModel() = OnboardingViewModel(repository, navigator, clock)
+    private fun createViewModel() =
+        OnboardingViewModel(repository, navigator, HealthSettingsHandler(), clock)
 
     private fun OnboardingViewModel.fillPersonal(name: String = "Chris", sex: Sex = Sex.MALE) {
         onEvent(OnboardingEvent.NameChanged(name))

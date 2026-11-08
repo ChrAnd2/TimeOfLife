@@ -8,6 +8,7 @@ import de.chrisander.timeoflife.domain.usecase.GetLifeTimeBreakdownUseCase
 import de.chrisander.timeoflife.ui.home.mapper.toLifeOverview
 import de.chrisander.timeoflife.ui.navigation.ActivityDetailRoute
 import de.chrisander.timeoflife.ui.navigation.Navigator
+import de.chrisander.timeoflife.ui.navigation.ProfileRoute
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
@@ -44,5 +45,9 @@ class HomeViewModel(
     /** @param activityId `null` opens free time. */
     fun onActivityClick(activityId: ActivityId?) {
         navigator.navigateTo(ActivityDetailRoute(activityId?.value))
+    }
+
+    fun onProfileClick() {
+        navigator.navigateTo(ProfileRoute)
     }
 }

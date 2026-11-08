@@ -9,3 +9,4 @@
 - Added home screen
 - Added activity details
 - Added health factors to onboarding
+- Added profile with personal data and custom activities

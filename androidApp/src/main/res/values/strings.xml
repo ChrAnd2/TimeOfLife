@@ -3,10 +3,10 @@
 
     <string name="onboarding_title">Welcome to TimeOfLife</string>
     <string name="onboarding_subtitle">Tell us a little about yourself to get started.</string>
-    <string name="onboarding_name_label">Name</string>
-    <string name="onboarding_sex_label">Sex</string>
-    <string name="onboarding_birth_date_label">Birth date</string>
-    <string name="onboarding_birth_date_placeholder">Select your birth date</string>
+    <string name="personal_settings_name_label">Name</string>
+    <string name="personal_settings_sex_label">Sex</string>
+    <string name="personal_settings_birth_date_label">Birth date</string>
+    <string name="personal_settings_birth_date_placeholder">Select your birth date</string>
     <string name="onboarding_submit">Get started</string>
     <string name="onboarding_save_error">Couldn\'t save your info. Please try again.</string>
     <string name="onboarding_continue">Continue</string>
@@ -132,6 +132,60 @@
     <plurals name="every_years">
         <item quantity="one">a year</item>
         <item quantity="other">every %1$d years</item>
+    </plurals>
+
+    <string name="navigation_back">Back</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_error">Couldn\'t save your changes. Please try again.</string>
+
+    <string name="home_profile">Profile</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="profile_age_and_birth_date">%1$d years · born %2$s</string>
+    <string name="profile_settings_title">Settings</string>
+    <string name="profile_personal_data_title">Personal data</string>
+    <string name="profile_personal_data_subtitle">Name, birth date and health</string>
+    <string name="profile_custom_activities_title">Custom activities</string>
+    <string name="profile_custom_activities_subtitle_empty">Add what else fills your time</string>
+    <plurals name="profile_custom_activities_subtitle">
+        <item quantity="one">%1$d activity</item>
+        <item quantity="other">%1$d activities</item>
+    </plurals>
+
+    <string name="custom_activities_caption">Hobbies, sports or anything else you regularly spend time on. They count towards your life just like sleep or work.</string>
+    <string name="custom_activities_empty">You haven\'t added any activities yet.</string>
+    <string name="custom_activities_add">Add activity</string>
+    <string name="custom_activity_add_title">New activity</string>
+    <string name="custom_activity_edit_title">Edit activity</string>
+    <string name="custom_activity_name_label">Name</string>
+    <string name="custom_activity_duration_label">How long each time</string>
+    <string name="custom_activity_summary">%1$s · about %2$s a day on average</string>
+    <string name="custom_activity_interval_label">How often</string>
+    <string name="custom_activity_every_label">Every</string>
+    <string name="custom_activity_ages_label">When in life</string>
+    <string name="custom_activity_ages_hint">Optional. Leave empty for since birth or until the end.</string>
+    <string name="custom_activity_from_age_label">From age</string>
+    <string name="custom_activity_until_age_label">Until age</string>
+    <string name="custom_activity_ages_error">The start age must be before the end age.</string>
+    <string name="custom_activity_delete">Delete</string>
+    <string name="custom_activity_delete_title">Delete %1$s?</string>
+    <string name="custom_activity_delete_body">It no longer counts towards your life time.</string>
+    <plurals name="interval_unit_days">
+        <item quantity="one">Day</item>
+        <item quantity="other">Days</item>
+    </plurals>
+    <plurals name="interval_unit_weeks">
+        <item quantity="one">Week</item>
+        <item quantity="other">Weeks</item>
+    </plurals>
+    <plurals name="interval_unit_months">
+        <item quantity="one">Month</item>
+        <item quantity="other">Months</item>
+    </plurals>
+    <plurals name="interval_unit_years">
+        <item quantity="one">Year</item>
+        <item quantity="other">Years</item>
     </plurals>
 
     <string name="clock_widget_name">Life clock</string>

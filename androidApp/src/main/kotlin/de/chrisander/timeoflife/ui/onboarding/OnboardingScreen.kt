@@ -9,15 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -30,24 +27,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.chrisander.timeoflife.R
 import de.chrisander.timeoflife.domain.model.profile.Sex
-import de.chrisander.timeoflife.ui.components.ToLDateField
-import de.chrisander.timeoflife.ui.components.ToLSingleChoiceSelector
 import de.chrisander.timeoflife.ui.healthsettings.HealthSettings
 import de.chrisander.timeoflife.ui.healthsettings.HealthSettingsUiState
 import de.chrisander.timeoflife.ui.healthsettings.model.SmokingChoice
+import de.chrisander.timeoflife.ui.personalsettings.PersonalSettings
 import de.chrisander.timeoflife.ui.theme.TimeOfLifeTheme
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
 import org.koin.compose.viewmodel.koinViewModel
-import kotlin.time.Clock
 
 @Composable
 fun OnboardingScreen(
@@ -128,27 +119,13 @@ private fun PersonalStep(
         title = stringResource(R.string.onboarding_title),
         subtitle = stringResource(R.string.onboarding_subtitle),
     )
-    OutlinedTextField(
-        value = uiState.name,
-        onValueChange = { onEvent(OnboardingEvent.NameChanged(it)) },
-        label = { Text(stringResource(R.string.onboarding_name_label)) },
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Words,
-            imeAction = ImeAction.Done,
-        ),
-        modifier = Modifier.fillMaxWidth(),
-    )
-    SexSelector(
-        selected = uiState.sex,
-        onSelect = { onEvent(OnboardingEvent.SexSelected(it)) },
-    )
-    ToLDateField(
-        date = uiState.birthDate,
-        onDateSelect = { onEvent(OnboardingEvent.BirthDateSelected(it)) },
-        label = stringResource(R.string.onboarding_birth_date_label),
-        placeholder = stringResource(R.string.onboarding_birth_date_placeholder),
-        selectableDates = PastOrPresentSelectableDates,
+    PersonalSettings(
+        name = uiState.name,
+        onNameChange = { onEvent(OnboardingEvent.NameChanged(it)) },
+        sex = uiState.sex,
+        onSexSelect = { onEvent(OnboardingEvent.SexSelected(it)) },
+        birthDate = uiState.birthDate,
+        onBirthDateSelect = { onEvent(OnboardingEvent.BirthDateSelected(it)) },
     )
     Button(
         onClick = { onEvent(OnboardingEvent.Continue) },
@@ -202,41 +179,6 @@ private fun SaveErrorSnackbar(
             currentOnDismiss()
         }
     }
-}
-
-@Composable
-private fun SexSelector(
-    selected: Sex?,
-    onSelect: (Sex) -> Unit,
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            text = stringResource(R.string.onboarding_sex_label),
-            style = MaterialTheme.typography.labelLarge,
-        )
-        ToLSingleChoiceSelector(
-            options = Sex.entries,
-            selected = selected,
-            label = {
-                stringResource(
-                    when (it) {
-                        Sex.MALE -> R.string.sex_male
-                        Sex.FEMALE -> R.string.sex_female
-                        Sex.DIVERSE -> R.string.sex_diverse
-                    },
-                )
-            },
-            onSelect = onSelect,
-        )
-    }
-}
-
-private object PastOrPresentSelectableDates : SelectableDates {
-    override fun isSelectableDate(utcTimeMillis: Long): Boolean =
-        utcTimeMillis <= Clock.System.now().toEpochMilliseconds()
-
-    override fun isSelectableYear(year: Int): Boolean =
-        year <= Clock.System.todayIn(TimeZone.currentSystemDefault()).year
 }
 
 @Preview(showBackground = true)
