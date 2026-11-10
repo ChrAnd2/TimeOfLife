@@ -5,8 +5,7 @@ The app estimates a life span in years. The user can replace it with their own v
 app should say so wherever it shows the number.
 
 Implementation: `sharedLogic/.../domain/usecase/StudyBasedLifespanEstimator.kt` adds up the
-`yearsEffect` of each
-`HealthFactor`. Every factor and its numbers live in their own file in
+`yearsEffect` of each `HealthFactor`. Every factor and its numbers live in their own file in
 `domain/model/lifespan/factor/`. The baseline table is
 `data/datasource/StaticBaselineLifeExpectancyProvider.kt`.
 
@@ -54,8 +53,8 @@ or 30 regained about 3, 6, 9 or 10 years.
 ### Alcohol
 
 Wood AM et al. *Risk thresholds for alcohol consumption: combined analysis of individual-participant
-data for 599 912 current drinkers in 83 prospective studies.* Lancet 2018;391:1513–23.
-[doi:10.1016/S0140-6736 (18)30134-X](https://doi.org/10.1016/S0140-6736(18)30134-X)
+data for 599 912 current drinkers in 83 prospective studies.* Lancet 2018;391:
+1513–23. [doi:10.1016/S0140-6736 (18)30134-X](https://doi.org/10.1016/S0140-6736(18)30134-X)
 
 Compared with drinking less than 100 g of alcohol per week, life expectancy at age 40 was about 6
 months, 1–2 years and 4–5 years lower for 100–200, 200–350 and more than 350 g/week.
@@ -70,8 +69,8 @@ months, 1–2 years and 4–5 years lower for 100–200, 200–350 and more than
 ### Physical activity
 
 Moore SC et al. *Leisure Time Physical Activity of Moderate to Vigorous Intensity and Mortality: A
-Large Pooled Cohort Analysis.* PLoS Med 2012;9 (11):e1001335.
-[doi:10.1371/journal.pmed.1001335](https://doi.org/10.1371/journal.pmed.1001335)
+Large Pooled Cohort Analysis.* PLoS Med 2012;9 (11):
+e1001335. [doi:10.1371/journal.pmed.1001335](https://doi.org/10.1371/journal.pmed.1001335)
 ([NIH summary](https://www.nih.gov/news-events/news-releases/nih-study-finds-leisure-time-physical-activity-extends-life-expectancy-much-45-years))
 
 Compared with no leisure time activity: up to 75 min/week of brisk walking +1.8 years, meeting the
@@ -87,8 +86,8 @@ recommended level +3.4 years, 450+ min/week +4.5 years.
 ### Body mass index
 
 Prospective Studies Collaboration. *Body-mass index and cause-specific mortality in 900 000 adults:
-collaborative analyses of 57 prospective studies.* Lancet 2009;373:1083–96.
-[doi:10.1016/S0140-6736 (09)60318-4](https://doi.org/10.1016/S0140-6736(09)60318-4)
+collaborative analyses of 57 prospective studies.* Lancet 2009;373:
+1083–96. [doi:10.1016/S0140-6736 (09)60318-4](https://doi.org/10.1016/S0140-6736(09)60318-4)
 ([PMC full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC2662372/))
 
 Mortality was lowest at a BMI of about 22.5–25. At 30–35 kg/m² median survival was 2–4 years
@@ -106,8 +105,8 @@ shorter, at 40–45 kg/m² 8–10 years shorter.
 ### Health conditions (diabetes, heart attack, stroke)
 
 The Emerging Risk Factors Collaboration. *Association of Cardiometabolic Multimorbidity With
-Mortality.*
-JAMA 2015;314 (1):52–60. [doi:10.1001/jama.2015.7008](https://doi.org/10.1001/jama.2015.7008)
+Mortality.* JAMA 2015;314 (1):
+52–60. [doi:10.1001/jama.2015.7008](https://doi.org/10.1001/jama.2015.7008)
 ([PMC full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC4664176/))
 
 At age 60, a history of any two of these conditions was associated with about 12 years lower life
@@ -133,5 +132,5 @@ expectancy, all three with about 15 years. Each condition carried a similar mort
   have outlived the estimate.
 - **Ages differ between studies.** The alcohol figures are for age 40 and the condition figures for
   age 60.
-- **Few countries.** Only Germany has its own baseline so far. A full table could come from the
-  [UN World Population Prospects](https://population.un.org/wpp/).
+- **Few countries.** Only Germany has its own baseline so far. A full table could come from
+  the [UN World Population Prospects](https://population.un.org/wpp/).
