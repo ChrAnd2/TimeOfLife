@@ -10,3 +10,4 @@
 - Added activity details
 - Added health factors to onboarding
 - Added profile with personal data and custom activities
+- Updated README and added technical documentation
